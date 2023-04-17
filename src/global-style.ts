@@ -46,4 +46,11 @@ button {
   background-color: transparent;
   cursor: pointer;
 }
+:root {
+  --gray-100: #333;
+  --gray-400: #666;
+  --gray-900: #f6f6f6;
+
+  --br-m: 5px;
+}
 `;
