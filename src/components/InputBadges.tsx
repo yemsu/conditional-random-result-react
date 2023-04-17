@@ -1,4 +1,4 @@
-import { Dispatch, ReactNode, SetStateAction, SyntheticEvent } from "react"
+import { ReactNode, SyntheticEvent } from "react"
 import styled from "styled-components"
 import Button from "../elements/Button"
 import Badges from "../elements/Badges"
