@@ -1,39 +1,31 @@
-import { Dispatch, SetStateAction, SyntheticEvent } from "react"
+import { Dispatch, ReactNode, SetStateAction, SyntheticEvent } from "react"
 import styled from "styled-components"
-import Input from "../elements/Input"
 import Button from "../elements/Button"
 import Badge from "../elements/Badge"
 
 interface InputBadgesProps {
-  onChange: (e: SyntheticEvent) => void
-  onSubmit: (e: SyntheticEvent, dataType: string) => void
+  InputComp: ReactNode
   dataType: string
-  inputValue: string
   dataList: string[]
-  setDataList: Dispatch<SetStateAction<{[key: string]: string[]}>>
+  onSubmit: (e: SyntheticEvent, dataType: string) => void
 }
 
 function InputBadges(props: InputBadgesProps) {
   const {
-    onChange,
-    onSubmit,
+    InputComp,
     dataType,
-    inputValue,
-    dataList
+    dataList,
+    onSubmit
   } = props
   
   return (
     <FormStyled onSubmit={(e) => onSubmit(e, dataType)}>
-      <Input
-        name={dataType}
-        value={inputValue}
-        onChange={onChange}
-      />
+      { InputComp }
       <Button type="submit">추가</Button>
 
       <ul>
         {dataList.map((data: string) => (
-          <li key={data}>
+          <li key={ data }>
             <Badge>{ data }</Badge>
           </li>
         ))}

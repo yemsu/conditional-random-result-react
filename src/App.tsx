@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import GlobalStyle from './global-style'
 import ContentSection from './components/ContentSection';
 import InputBadges from './components/InputBadges';
+import Input from './elements/Input';
 import useInputs from './hooks/useInputs';
 import { SyntheticEvent, useCallback, useState } from 'react';
 
@@ -31,24 +32,30 @@ function App() {
     setForms((prev) => ({...prev, memberName: ''}))
   }, [forms, addedDataList])
 
+  const getInputComp = useCallback((dataType: string) => (
+    <Input
+      name={dataType}
+      value={forms[dataType]}
+      onChange={onChange}
+    />
+  ), [forms, onChange])
+
   return (
-    <>
-      <GlobalStyle />
-      <AppStyled>
-        <ContentSection
-          title="멤버"
-        >
-          <InputBadges
-            onChange={onChange}
-            onSubmit={onSubmit}
-            dataType="memberName"
-            inputValue={forms.memberName}
-            dataList={addedDataList.memberNames}
-            setDataList={setAddedDataList}
-          />
-        </ContentSection>
-      </AppStyled>
-    </>
+      <>
+        <GlobalStyle />
+        <AppStyled>
+          <ContentSection
+            title="멤버"
+          >
+            <InputBadges
+              InputComp={getInputComp('memberName')}
+              dataType="memberName"
+              dataList={addedDataList.memberNames}
+              onSubmit={onSubmit}
+            />
+          </ContentSection>
+        </AppStyled>
+      </>
   );
 }
 
