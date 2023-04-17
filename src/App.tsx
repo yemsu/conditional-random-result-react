@@ -5,31 +5,36 @@ import InputBadges from './components/InputBadges';
 import Input from './elements/Input';
 import useInputs from './hooks/useInputs';
 import { SyntheticEvent, useCallback, useState } from 'react';
+import { getObjFromKeyArr, getDataListType } from './utils';
 
 interface Forms {
   [key: string]: string
 }
 
+interface AddedDataList {
+  [key: string]: string[]
+}
+
 function App() {
-  const [forms, onChange, reset, setForms] = useInputs<Forms>({
-    memberName: '',
-    caseName: ''
-  })
-  const [addedDataList, setAddedDataList] = useState<{[key: string]: string[]}>({
-    memberNames: [],
-    caseNames: []
-  })
+  const dataTypes = ['memberName', 'caseName']
+  const dataListTypes = dataTypes.map((dataType) => getDataListType(dataType))
+  const [forms, onChange, reset, setForms] = useInputs<Forms>(
+    getObjFromKeyArr<string>(dataTypes, '')
+  )
+  const [addedDataList, setAddedDataList] = useState<AddedDataList>(
+    getObjFromKeyArr<string[]>(dataListTypes, [])
+  )
 
   const onSubmit = useCallback((e: SyntheticEvent, dataType: string) => {
     e.preventDefault()
-    const dataListType = `${dataType}s`
+    const dataListType = getDataListType(dataType)
     const newData = forms[dataType]
     setAddedDataList((prev) => ({
       ...prev,
       [dataListType]: [...prev[dataListType], newData]
     }))
     // reset form
-    setForms((prev) => ({...prev, memberName: ''}))
+    setForms((prev) => ({...prev, [dataType]: ''}))
   }, [forms, addedDataList])
 
   const getInputComp = useCallback((dataType: string) => (
@@ -44,16 +49,19 @@ function App() {
       <>
         <GlobalStyle />
         <AppStyled>
-          <ContentSection
-            title="멤버"
-          >
-            <InputBadges
-              InputComp={getInputComp('memberName')}
-              dataType="memberName"
-              dataList={addedDataList.memberNames}
-              onSubmit={onSubmit}
-            />
-          </ContentSection>
+          {dataTypes.map((dataType: string) => (
+            <ContentSection
+              key={dataType}
+              title={dataType}
+            >
+              <InputBadges
+                InputComp={getInputComp(dataType)}
+                dataType={dataType}
+                dataList={addedDataList[getDataListType(dataType)]}
+                onSubmit={onSubmit}
+              />
+            </ContentSection>
+          ))}
         </AppStyled>
       </>
   );
