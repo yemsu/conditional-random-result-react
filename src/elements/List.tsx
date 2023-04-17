@@ -1,20 +1,22 @@
+import { ReactNode } from "react"
 import styled from "styled-components"
-import Badge from "./Badge"
 
-interface BadgesProps {
+interface ListProps {
   dataList: string[]
+  children: (data: string) => ReactNode
 }
 
-function Badges(props: BadgesProps) {
+function List(props: ListProps) {
   const {
-    dataList
+    dataList,
+    children
   } = props
 
   return (
     <UlStyled>
       {dataList.map((data: string) => (
         <LiStyled key={ data }>
-          <Badge>{ data }</Badge>
+          { children(data) }
         </LiStyled>
       ))}
     </UlStyled>
@@ -29,4 +31,4 @@ const LiStyled = styled.li`
   
 `
 
-export default Badges
+export default List

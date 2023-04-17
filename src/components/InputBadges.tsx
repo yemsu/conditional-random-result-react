@@ -1,7 +1,8 @@
 import { ReactNode, SyntheticEvent } from "react"
 import styled from "styled-components"
 import Button from "../elements/Button"
-import Badges from "../elements/Badges"
+import Badge from "../elements/Badge"
+import List from "../elements/List"
 
 interface InputBadgesProps {
   InputComp: ReactNode
@@ -22,7 +23,9 @@ function InputBadges(props: InputBadgesProps) {
     <FormStyled onSubmit={(e) => onSubmit(e, dataType)}>
       { InputComp }
       <Button type="submit">추가</Button>
-      <Badges dataList={dataList} />
+      <List dataList={dataList}>
+        {(data) => <Badge>{ data }</Badge>}
+      </List>
     </FormStyled>
   )
 }
