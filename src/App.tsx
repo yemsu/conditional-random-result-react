@@ -1,10 +1,13 @@
-import './App.scss';
+import GlobalStyle from './global-style'
 
 function App() {
   return (
-    <div className="App">
+    <>
+      <GlobalStyle />
+      <div className="App">
       
-    </div>
+      </div>
+    </>
   );
 }
 
