@@ -1,32 +1,52 @@
-import { ReactNode } from "react"
-import styled from "styled-components"
+import { ReactNode, SyntheticEvent } from "react"
+import styled, { css } from "styled-components"
 
 interface ButtonProps {
   type?: 'button' | 'submit'
   children: ReactNode
+  onClick?: (e: SyntheticEvent) => void
+  styleTheme?: 'normal' | 'selected'
 }
 
 function Button(props: ButtonProps) {
   const {
     type = 'button',
-    children
+    children,
+    onClick,
+    styleTheme ='normal'
   } = props
 
   return (
     <ButtonStyled
       type={type}
+      onClick={onClick}
+      theme={styleThemeMap[styleTheme]}
     >
       { children }
     </ButtonStyled>
   )
 }
 
+const styleThemeMap = {
+  normal: {
+    ButtonStyled: css`
+      border: 1px solid var(--gray-400);
+    `
+  },
+  selected: {
+    ButtonStyled: css`
+      background-color: var(--primary);
+      color: #fff;
+    `
+  }
+}
+
 const ButtonStyled = styled.button`
   height: 30px;
   padding: 0 10px;
-  border: 1px solid var(--gray-400);
   border-radius: var(--br-m);
   transition: 0.1s;
+  ${(props) => props.theme.ButtonStyled}
 `
 
 // button:not(:disabled):hover {
