@@ -47,6 +47,9 @@ button {
   cursor: pointer;
 }
 :root {
+  --primary-hsl: 150, 60%, 50%;
+  --primary: hsl(var(--primary-hsl));
+
   --gray-100: #333;
   --gray-400: #666;
   --gray-900: #f6f6f6;
