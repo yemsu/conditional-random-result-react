@@ -1,33 +1,44 @@
-import { ReactNode } from "react"
+import { ElementType, ReactNode } from "react"
 import styled from "styled-components"
 
 interface ListProps {
   dataList: string[]
   children: (data: string) => ReactNode
+  title?: string
 }
 
 function List(props: ListProps) {
   const {
     dataList,
-    children
+    children,
+    title,
   } = props
 
+  const [listTagName, listItemTagName, listTitleTagName]: ElementType[] = title
+    ? ['dl', 'dd', 'dt']
+    : ['ul', 'li']
+
   return (
-    <UlStyled>
+    <ListStyled as={listTagName}>
+      {title && <ListTitleStyled as={listTitleTagName}>{ title }</ListTitleStyled>}
       {dataList.map((data: string) => (
-        <LiStyled key={ data }>
+        <ListItemStyled key={ data } as={listItemTagName}>
           { children(data) }
-        </LiStyled>
+        </ListItemStyled>
       ))}
-    </UlStyled>
+    </ListStyled>
   )
 }
 
-const UlStyled = styled.ul`
+const ListStyled = styled.ul`
   
 `
 
-const LiStyled = styled.li`
+const ListTitleStyled = styled.ul`
+  
+`
+
+const ListItemStyled = styled.li`
   
 `
 
