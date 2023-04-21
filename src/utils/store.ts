@@ -1,6 +1,7 @@
 import { OptionButtons } from "../types/common"
 
 const RANDOM_RESULT_OPTIONS = 'RANDOM_RESULT_OPTIONS'
+const RANDOM_RESULT_EXCEPTIONS = 'RANDOM_RESULT_EXCEPTIONS'
 
 const store = {
   state: {},
@@ -14,6 +15,15 @@ const store = {
     },
     deleteSavedInputBadges: () => {
       return savedData.delete(RANDOM_RESULT_OPTIONS)
+    },
+    getSavedExceptions: () => {
+      return savedData.get(RANDOM_RESULT_EXCEPTIONS)
+    },
+    saveExceptions: (optionButtons: OptionButtons) => {
+      return savedData.save(RANDOM_RESULT_EXCEPTIONS, optionButtons)
+    },
+    deleteSavedExceptions: () => {
+      return savedData.delete(RANDOM_RESULT_EXCEPTIONS)
     },
   }
 }
