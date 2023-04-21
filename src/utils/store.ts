@@ -7,16 +7,28 @@ const store = {
   mutations: {},
   actions: {
     getSavedInputBadges: () => {
-      const data = localStorage.getItem(RANDOM_RESULT_OPTIONS)
-      if(!data) return null
-      return JSON.parse(data)
+      return savedData.get(RANDOM_RESULT_OPTIONS)
     },
     saveInputBadges: (optionButtons: OptionButtons) => {
-      localStorage.setItem(RANDOM_RESULT_OPTIONS, JSON.stringify(optionButtons))
+      return savedData.save(RANDOM_RESULT_OPTIONS, optionButtons)
     },
     deleteSavedInputBadges: () => {
-      localStorage.removeItem(RANDOM_RESULT_OPTIONS)
+      return savedData.delete(RANDOM_RESULT_OPTIONS)
     },
+  }
+}
+
+const savedData = {
+  get: (storageName: string) => {
+    const data = localStorage.getItem(storageName)
+    if(!data) return null
+    return JSON.parse(data)
+  },
+  save: <Data>(storageName: string, data: Data) => {
+    localStorage.setItem(storageName, JSON.stringify(data))
+  },
+  delete: (storageName: string) => {
+    localStorage.removeItem(storageName)
   }
 }
 
