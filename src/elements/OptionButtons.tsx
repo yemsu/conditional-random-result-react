@@ -23,6 +23,7 @@ function OptionButtons(props: OptionButtonsProps) {
       <List
         dataList={dataList}
         title={title}
+        direction="row"
       >
         {(option) => (
           <Button

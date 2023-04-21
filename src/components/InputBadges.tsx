@@ -23,7 +23,7 @@ function InputBadges(props: InputBadgesProps) {
     <FormStyled onSubmit={(e) => onSubmit(e, dataType)}>
       { InputComp }
       <Button type="submit">추가</Button>
-      <List dataList={dataList}>
+      <List dataList={dataList} direction="row">
         {(data) => <Badge>{ data }</Badge>}
       </List>
     </FormStyled>

@@ -1,10 +1,11 @@
 import { ElementType, ReactNode } from "react"
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 
 interface ListProps {
   dataList: string[]
   children: (data: string) => ReactNode
   title?: string
+  direction?: 'column' | 'row'
 }
 
 function List(props: ListProps) {
@@ -12,6 +13,7 @@ function List(props: ListProps) {
     dataList,
     children,
     title,
+    direction = 'column'
   } = props
 
   const [listTagName, listItemTagName, listTitleTagName]: ElementType[] = title
@@ -19,7 +21,7 @@ function List(props: ListProps) {
     : ['ul', 'li']
 
   return (
-    <ListStyled as={listTagName}>
+    <ListStyled as={listTagName} theme={styleThemeMap[direction]}>
       {title && <ListTitleStyled as={listTitleTagName}>{ title }</ListTitleStyled>}
       {dataList.map((data: string) => (
         <ListItemStyled key={ data } as={listItemTagName}>
@@ -30,12 +32,24 @@ function List(props: ListProps) {
   )
 }
 
+const styleThemeMap = {
+  'column': {
+    ListStyled: css``
+  },
+  'row': {
+    ListStyled: css`
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+    `
+  }
+}
+
 const ListStyled = styled.ul`
-  
+  ${(props) => props.theme.ListStyled}
 `
 
 const ListTitleStyled = styled.ul`
-  
 `
 
 const ListItemStyled = styled.li`
