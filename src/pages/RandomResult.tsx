@@ -2,6 +2,7 @@ import styled from "styled-components"
 import ContentSection from '../components/ContentSection';
 import InputBadges from '../components/InputBadges';
 import Input from '../elements/Input';
+import Button from "../elements/Button";
 import useInputs from '../hooks/useInputs';
 import { SyntheticEvent, useCallback } from 'react';
 import { getObjFromKeyArr } from '../utils';
@@ -15,11 +16,11 @@ function RandomResult() {
   const [forms, onChange, reset, setForms] = useInputs<Forms>(
     getObjFromKeyArr<string>(dataTypes, '')
   )
-  const [inputDataList, addInputData] = useInputBadges(
+  const [inputDataList, addInputData, resetInputData] = useInputBadges(
     getObjFromKeyArr<string[]>(dataTypes, []),
     setForms
   )
-  const [exceptions, onSelectException] = useOptionButtons(
+  const [exceptions, onSelectException, resetExceptions] = useOptionButtons(
     getObjFromKeyArr<string[]>(dataTypes, [])
   )
 
@@ -36,6 +37,11 @@ function RandomResult() {
     />
   ), [forms, onChange])
 
+  const onClickResetInputData = useCallback(() => {
+    resetInputData()
+    resetExceptions()
+  }, [])
+
   return (
     <div>
       {dataTypes.map((dataType: string) => (
@@ -51,6 +57,7 @@ function RandomResult() {
           />
         </ContentSection>
       ))}
+      <Button onClick={onClickResetInputData}>resetInputData</Button>
       {
         <ContentSection
           title="예외"
@@ -67,6 +74,7 @@ function RandomResult() {
           ))}
         </ContentSection>
       }
+      <Button onClick={resetExceptions}>resetExceptions</Button>
     </div>
   )
 }

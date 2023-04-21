@@ -4,12 +4,13 @@ import useLocalStorage from "./useLocalStorage";
 
 type UseOptionButtons = [
   optionButtons: OptionButtons,
-  onClickButton: (option:string, dataType: string) => void
+  onClickButton: (option:string, dataType: string) => void,
+  resetInputBadge: () => void
 ]
 
 function useOptionButtons(initialOptionButtons: OptionButtons): UseOptionButtons {
   const [optionButtons, setOptionButtons] = useState(initialOptionButtons)
-  const [saveLocalStorage] = useLocalStorage('RANDOM_RESULT_EXCEPTIONS', setOptionButtons)
+  const [saveLocalStorage, deleteLocalStorage] = useLocalStorage('RANDOM_RESULT_EXCEPTIONS', setOptionButtons)
 
   const onClickButton = useCallback((option: string, dataType: string) => {
     const isToggleOff = optionButtons[dataType].includes(option)
@@ -29,7 +30,12 @@ function useOptionButtons(initialOptionButtons: OptionButtons): UseOptionButtons
     saveLocalStorage(result(optionButtons))
   }, [optionButtons])
 
-  return [optionButtons, onClickButton]
+  const resetOptionButtons = useCallback(() => {
+    setOptionButtons(initialOptionButtons)
+    deleteLocalStorage()
+  }, [])
+
+  return [optionButtons, onClickButton, resetOptionButtons]
 }
 
 export default useOptionButtons
