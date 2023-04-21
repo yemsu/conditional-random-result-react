@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction, useCallback, useEffect, useState } from "react";
 import { Forms } from "../types/common";
 import store from "../utils/store";
+import useLocalStorage from "./useLocalStorage";
 
 type InputBadges = {[key: string]: string[]}
 
@@ -14,13 +15,7 @@ function useInputBadges(
   setForms: Dispatch<SetStateAction<Forms>>
 ): UseInputBadges {
   const [inputBadges, setInputBadges] = useState<InputBadges>(initialOptionButtons)
-
-  useEffect(() => {
-    const savedInputBadges = store.actions.getSavedInputBadges()
-    if(savedInputBadges) {
-      setInputBadges(savedInputBadges)
-    }
-  }, [])
+  const [saveLocalStorage] = useLocalStorage('RANDOM_RESULT_OPTIONS', setInputBadges)
 
   const addInputBadge = useCallback((newData: string, dataType: string) => {
     const getResult = (prev: InputBadges) => ({
@@ -28,7 +23,7 @@ function useInputBadges(
       [dataType]: [...prev[dataType], newData]
     })
     setInputBadges(getResult)
-    store.actions.saveInputBadges(getResult(inputBadges))
+    saveLocalStorage(getResult(inputBadges))
   
     // reset form
     setForms((prev) => ({...prev, [dataType]: ''}))

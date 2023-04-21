@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { OptionButtons } from "../types/common";
-import store from "../utils/store";
+import useLocalStorage from "./useLocalStorage";
 
 type UseOptionButtons = [
   optionButtons: OptionButtons,
@@ -9,13 +9,7 @@ type UseOptionButtons = [
 
 function useOptionButtons(initialOptionButtons: OptionButtons): UseOptionButtons {
   const [optionButtons, setOptionButtons] = useState(initialOptionButtons)
-
-  useEffect(() => {
-    const savedOptionButtons = store.actions.getSavedExceptions()
-    if(savedOptionButtons) {
-      setOptionButtons(savedOptionButtons)
-    }
-  }, [])
+  const [saveLocalStorage] = useLocalStorage('RANDOM_RESULT_EXCEPTIONS', setOptionButtons)
 
   const onClickButton = useCallback((option: string, dataType: string) => {
     const isToggleOff = optionButtons[dataType].includes(option)
@@ -32,7 +26,7 @@ function useOptionButtons(initialOptionButtons: OptionButtons): UseOptionButtons
     })
     
     setOptionButtons(result)    
-    store.actions.saveExceptions(result(optionButtons))
+    saveLocalStorage(result(optionButtons))
   }, [optionButtons])
 
   return [optionButtons, onClickButton]
