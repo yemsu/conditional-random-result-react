@@ -30,7 +30,7 @@ const H2Styled = styled.h2`
   
 `
 
-const ContentArea = styled.h2`
+const ContentArea = styled.div`
   
 `
 
