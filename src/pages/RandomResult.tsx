@@ -97,22 +97,25 @@ function RandomResult() {
 
   return (
     <div>
-      {dataTypeKeyNames.map((dataTypeKeyName: string, i) => (
-        <ContentSection
-          key={`${dataTypeKeyName}-addData`}
-          title={dataTypes[i].korName}
-        >
-          <InputBadges
-            InputComp={getInputComp(dataTypeKeyName)}
-            dataType={dataTypeKeyName}
-            dataList={inputDataList[dataTypeKeyName]}
-            onSubmit={onSubmit}
-          />
-        </ContentSection>
-      ))}
-      <Button onClick={onClickResetInputData}>resetInputData</Button>
+      <h1>조건 뢴듬 뽑기</h1>
+      <ContentSection title="기본 설정">
+        <Button onClick={onClickResetInputData}>전체 재설정</Button>
+        {dataTypeKeyNames.map((dataTypeKeyName: string, i) => (
+          <ContentSection
+            key={`${dataTypeKeyName}-addData`}
+            title={dataTypes[i].korName}
+          >
+            <InputBadges
+              InputComp={getInputComp(dataTypeKeyName)}
+              dataType={dataTypeKeyName}
+              dataList={inputDataList[dataTypeKeyName]}
+              onSubmit={onSubmit}
+            />
+          </ContentSection>
+        ))}
+      </ContentSection>
       <ContentSection
-        title="예외"
+        title="조건 설정"
       >
         {dataTypeKeyNames.map((dataTypeKeyName: string, i) => (
           <Fragment key={dataTypeKeyName}>
@@ -126,23 +129,22 @@ function RandomResult() {
             />
           </Fragment>
         ))}
-        <Button onClick={addException}>예외 추가하기</Button>
-        <Button onClick={resetExceptions}>resetExceptions</Button>
+        <Button onClick={addException}>선택한 조건 추가</Button>
+        <Button onClick={resetExceptions}>조건 재설정</Button>
         
-        <h3>추가된 예외</h3>
+        <h3>추가된 조건</h3>
         <List
           dataList={exceptions}
         >
           {({memberName, caseName}) => (
             <>            
-              멤버: {memberName}
-              예외: {caseName}
+              {memberName} / {caseName.join(', ')}
             </>
           )}        
         </List>
       </ContentSection>
       <ContentSection
-        title="결과"
+        title="뽑기 결과"
       >
         <List dataList={caseIndexResults}>
           {(caseIndexResult: number, i: number) => (
