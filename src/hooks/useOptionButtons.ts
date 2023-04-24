@@ -1,6 +1,7 @@
 import { useCallback, useState } from "react";
 import { OptionButtons } from "../types/common";
 import useLocalStorage from "./useLocalStorage";
+import { STORAGE_NAME } from "../constants/clientStorage";
 
 type UseOptionButtons = [
   optionButtons: OptionButtons,
@@ -10,7 +11,7 @@ type UseOptionButtons = [
 
 function useOptionButtons(initialOptionButtons: OptionButtons): UseOptionButtons {
   const [optionButtons, setOptionButtons] = useState(initialOptionButtons)
-  const [saveLocalStorage, deleteLocalStorage] = useLocalStorage('RANDOM_RESULT_EXCEPTIONS', setOptionButtons)
+  const [saveLocalStorage, deleteLocalStorage] = useLocalStorage(STORAGE_NAME.OPTION_BUTTONS, setOptionButtons)
 
   const onClickButton = useCallback((option: string, dataType: string) => {
     const isToggleOff = optionButtons[dataType].includes(option)
