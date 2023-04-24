@@ -2,7 +2,6 @@ import List from "./List"
 import Button from "./Button"
 
 interface OptionButtonsProps {
-  title: string
   dataList: string[]
   selectedList: string[]
   dataType: string
@@ -11,7 +10,6 @@ interface OptionButtonsProps {
 
 function OptionButtons(props: OptionButtonsProps) {
   const {
-    title,
     dataList,
     dataType,
     onSelect,
@@ -19,20 +17,17 @@ function OptionButtons(props: OptionButtonsProps) {
   } = props
 
   return (
-    <div>
-      <List
-        dataList={dataList}
-        title={title}
-        direction="row"
-      >
-        {(option) => (
-          <Button
-            styleTheme={selectedList.includes(option) ? 'selected' : 'normal'}
-            onClick={() => onSelect(option, dataType)}
-          >{ option }</Button>
-        )}
-      </List>
-    </div>
+    <List
+      dataList={dataList}
+      direction="row"
+    >
+      {(option) => (
+        <Button
+          styleTheme={selectedList.includes(option) ? 'selected' : 'normal'}
+          onClick={() => onSelect(option, dataType)}
+        >{ option }</Button>
+      )}
+    </List>
   )
 }
 

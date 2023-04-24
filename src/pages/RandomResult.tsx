@@ -63,14 +63,16 @@ function RandomResult() {
           title="예외"
         >
           {dataTypes.map((dataType: string) => (
-            <OptionButtons
-              key={`${dataType}-exceptions`}
-              title={dataType}
-              dataType={dataType}
-              dataList={inputDataList[dataType]}
-              selectedList={exceptions[dataType]}
-              onSelect={onSelectException}
-            />
+            <>
+              <h3>{ dataType }</h3>
+              <OptionButtons
+                key={`${dataType}-exceptions`}
+                dataType={dataType}
+                dataList={inputDataList[dataType]}
+                selectedList={exceptions[dataType]}
+                onSelect={onSelectException}
+              />
+            </>
           ))}
         </ContentSection>
       }
