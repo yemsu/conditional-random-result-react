@@ -143,19 +143,25 @@ function RandomResult() {
           )}        
         </List>
       </ContentSection>
-      <ContentSection
-        title="뽑기 결과"
-      >
-        <List dataList={caseIndexResults}>
-          {(caseIndexResult: number, i: number) => (
-            <>
-              <span>{ inputDataList.memberName[i] }</span>
-              <span>{ inputDataList.caseName[caseIndexResult] }</span>
-            </>
-          )}
-        </List>
-      </ContentSection>
-      <Button onClick={onClickGetResult}>결과보기</Button>
+      {
+        caseIndexResults.length > 0 && 
+        <ContentSection
+          title="뽑기 결과"
+        >
+          <List dataList={caseIndexResults}>
+            {(caseIndexResult: number, i: number) => (
+              <>
+                <span>{ inputDataList.memberName[i] }</span>
+                <span>{ inputDataList.caseName[caseIndexResult] }</span>
+              </>
+            )}
+          </List>
+        </ContentSection>
+      }
+      <Button onClick={onClickGetResult}>{
+        caseIndexResults.length > 0
+          ? '다시 뽑기' : '랜덤 뽑기'
+      }</Button>
     </div>
   )
 }
