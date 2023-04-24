@@ -26,7 +26,6 @@ h1, h2, h3, h4 {
 }
 h1 {
   font-size: 1.2em;
-  text-align: center;
 }
 h2 {
   font-size: 1.1em;
