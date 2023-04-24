@@ -15,17 +15,21 @@ import useLocalStorage from "../hooks/useLocalStorage";
 import { STORAGE_NAME } from "../constants/clientStorage";
 
 function RandomResult() {
-  const dataTypes = ['memberName', 'caseName']
+  const dataTypes = [
+    {keyName: 'memberName', korName: '멤버명'},
+    {keyName: 'caseName', korName: '결과값'},
+  ]
+  const dataTypeKeyNames = dataTypes.map(({ keyName }) => keyName)
   const [forms, onChange, reset, setForms] = useInputs<Forms>(
-    getObjFromKeyArr<string>(dataTypes, '')
+    getObjFromKeyArr<string>(dataTypeKeyNames, '')
   )
   const [inputDataList, addInputData, resetInputData] = useInputBadges(
-    getObjFromKeyArr<string[]>(dataTypes, []),
+    getObjFromKeyArr<string[]>(dataTypeKeyNames, []),
     setForms
   )
   // selected exceptions
   const [selectedExceptions, onSelectException, resetSelectedExceptions] = useOptionButtons(
-    getObjFromKeyArr<string[]>(dataTypes, [])
+    getObjFromKeyArr<string[]>(dataTypeKeyNames, [])
   )
   // exceptions
   const [exceptions, setExceptions] = useState<OptionButtonsState[]>([])
@@ -93,15 +97,15 @@ function RandomResult() {
 
   return (
     <div>
-      {dataTypes.map((dataType: string) => (
+      {dataTypeKeyNames.map((dataTypeKeyName: string, i) => (
         <ContentSection
-          key={`${dataType}-addData`}
-          title={dataType}
+          key={`${dataTypeKeyName}-addData`}
+          title={dataTypes[i].korName}
         >
           <InputBadges
-            InputComp={getInputComp(dataType)}
-            dataType={dataType}
-            dataList={inputDataList[dataType]}
+            InputComp={getInputComp(dataTypeKeyName)}
+            dataType={dataTypeKeyName}
+            dataList={inputDataList[dataTypeKeyName]}
             onSubmit={onSubmit}
           />
         </ContentSection>
@@ -110,14 +114,14 @@ function RandomResult() {
       <ContentSection
         title="예외"
       >
-        {dataTypes.map((dataType: string) => (
-          <Fragment key={dataType}>
-            <h3>{ dataType }</h3>
+        {dataTypeKeyNames.map((dataTypeKeyName: string, i) => (
+          <Fragment key={dataTypeKeyName}>
+            <h3>{ dataTypes[i].korName }</h3>
             <OptionButtons
-              key={`${dataType}-exceptions`}
-              dataType={dataType}
-              dataList={inputDataList[dataType]}
-              selectedList={selectedExceptions[dataType]}
+              key={`${dataTypeKeyName}-exceptions`}
+              dataType={dataTypeKeyName}
+              dataList={inputDataList[dataTypeKeyName]}
+              selectedList={selectedExceptions[dataTypeKeyName]}
               onSelect={onSelectException}
             />
           </Fragment>
