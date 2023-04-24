@@ -3,7 +3,7 @@ import styled, { css } from "styled-components"
 
 interface ListProps<DataType> {
   dataList: DataType[]
-  children: (data: DataType) => ReactNode
+  children: (data: DataType, i: number) => ReactNode
   direction?: 'column' | 'row'
 }
 
@@ -18,7 +18,7 @@ function List<DataType>(props: ListProps<DataType>) {
     <ListStyled theme={styleThemeMap[direction]}>
       {dataList.map((data: DataType, i) => (
         <ListItemStyled key={i}>
-          { children(data) }
+          { children(data, i) }
         </ListItemStyled>
       ))}
     </ListStyled>

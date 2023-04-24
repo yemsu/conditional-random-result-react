@@ -8,3 +8,8 @@ export const getObjFromKeyArr = <ValueType>(
 }
 
 export const getDataListType = (singleDataType: string) => `${singleDataType}s`
+
+export const getRandomInt = (max: number, min: number): number => {
+  const randomNum = Math.random()
+  return Math.floor(randomNum * max) + min
+}

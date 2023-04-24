@@ -4,8 +4,8 @@ import InputBadges from '../components/InputBadges';
 import Input from '../elements/Input';
 import Button from "../elements/Button";
 import useInputs from '../hooks/useInputs';
-import { SyntheticEvent, useCallback, useState } from 'react';
-import { getObjFromKeyArr } from '../utils';
+import { Fragment, SyntheticEvent, useCallback, useState } from 'react';
+import { getObjFromKeyArr, getRandomInt } from '../utils';
 import OptionButtons from "../elements/OptionButtons";
 import useOptionButtons from "../hooks/useOptionButtons";
 import useInputBadges from "../hooks/useInputBadges";
@@ -23,11 +23,16 @@ function RandomResult() {
     getObjFromKeyArr<string[]>(dataTypes, []),
     setForms
   )
+  // selected exceptions
   const [selectedExceptions, onSelectException, resetSelectedExceptions] = useOptionButtons(
     getObjFromKeyArr<string[]>(dataTypes, [])
   )
+  // exceptions
   const [exceptions, setExceptions] = useState<OptionButtonsState[]>([])
   const [saveExceptionData, deleteSavedExceptionData ] = useLocalStorage<OptionButtonsState[]>(STORAGE_NAME.SELECTED_EXCEPTIONS, setExceptions)
+  // result
+  const [caseIndexResults, setCaseIndexResults] = useState<number[]>([])
+  const [saveCaseIndexResults, deleteSaveCaseIndexResults ] = useLocalStorage<number[]>(STORAGE_NAME.CASE_INDEX_RESULTS, setCaseIndexResults)
 
   const onSubmit = useCallback((e: SyntheticEvent, dataType: string) => {
     e.preventDefault()
@@ -42,11 +47,6 @@ function RandomResult() {
     />
   ), [forms, onChange])
 
-  const onClickResetInputData = useCallback(() => {
-    resetInputData()
-    resetSelectedExceptions()
-  }, [])
-
   const addException = useCallback(() => {
     setExceptions(prev => [...prev, selectedExceptions])
     saveExceptionData([...exceptions, selectedExceptions])
@@ -56,7 +56,40 @@ function RandomResult() {
   const resetExceptions = useCallback(() => {
     setExceptions([])
     resetSelectedExceptions()
+    deleteSavedExceptionData()
   }, [])
+
+  const onClickResetInputData = useCallback(() => {
+    resetInputData()
+    resetExceptions()
+    setCaseIndexResults([])
+    deleteSaveCaseIndexResults()
+  }, [])
+
+  const getMemberResult = useCallback((memberName: string, memberResults: number[]): number => {
+    const randomInt = getRandomInt(inputDataList.memberName.length, 0)
+    const caseName = inputDataList.caseName[randomInt]
+    const isExceptionCase = exceptions.find((exception: OptionButtonsState) => (
+      exception.caseName.includes(caseName) && exception.memberName.includes(memberName)
+    ))
+    if(isExceptionCase || memberResults.includes(randomInt)) {
+      return getMemberResult(memberName, memberResults)
+    } else {
+      return randomInt
+    }
+
+  }, [inputDataList, exceptions, caseIndexResults])
+
+  const onClickGetResult = useCallback(async () => {    
+    let memberResults: number[] = []
+    inputDataList.memberName.forEach((memberName) => {
+      const memberResult = getMemberResult(memberName, memberResults)
+      memberResults = [...memberResults, memberResult]
+    })
+    
+    setCaseIndexResults(memberResults)
+    saveCaseIndexResults(memberResults)
+  }, [inputDataList, caseIndexResults])
 
   return (
     <div>
@@ -74,38 +107,49 @@ function RandomResult() {
         </ContentSection>
       ))}
       <Button onClick={onClickResetInputData}>resetInputData</Button>
-      {
-        <ContentSection
-          title="예외"
-        >
-          {dataTypes.map((dataType: string) => (
-            <>
-              <h3>{ dataType }</h3>
-              <OptionButtons
-                key={`${dataType}-exceptions`}
-                dataType={dataType}
-                dataList={inputDataList[dataType]}
-                selectedList={selectedExceptions[dataType]}
-                onSelect={onSelectException}
-              />
-            </>
-          ))}
-        </ContentSection>
-      }
-      <Button onClick={addException}>예외 추가하기</Button>
-      <Button onClick={resetExceptions}>resetExceptions</Button>
-      
-      <h3>추가된 예외</h3>
-      <List
-        dataList={exceptions}
+      <ContentSection
+        title="예외"
       >
-        {({memberName, caseName}) => (
-          <>            
-            멤버: {memberName}
-            예외: {caseName}
-          </>
-        )}        
-      </List>
+        {dataTypes.map((dataType: string) => (
+          <Fragment key={dataType}>
+            <h3>{ dataType }</h3>
+            <OptionButtons
+              key={`${dataType}-exceptions`}
+              dataType={dataType}
+              dataList={inputDataList[dataType]}
+              selectedList={selectedExceptions[dataType]}
+              onSelect={onSelectException}
+            />
+          </Fragment>
+        ))}
+        <Button onClick={addException}>예외 추가하기</Button>
+        <Button onClick={resetExceptions}>resetExceptions</Button>
+        
+        <h3>추가된 예외</h3>
+        <List
+          dataList={exceptions}
+        >
+          {({memberName, caseName}) => (
+            <>            
+              멤버: {memberName}
+              예외: {caseName}
+            </>
+          )}        
+        </List>
+      </ContentSection>
+      <ContentSection
+        title="결과"
+      >
+        <List dataList={caseIndexResults}>
+          {(caseIndexResult: number, i: number) => (
+            <>
+              <span>{ inputDataList.memberName[i] }</span>
+              <span>{ inputDataList.caseName[caseIndexResult] }</span>
+            </>
+          )}
+        </List>
+      </ContentSection>
+      <Button onClick={onClickGetResult}>결과보기</Button>
     </div>
   )
 }
