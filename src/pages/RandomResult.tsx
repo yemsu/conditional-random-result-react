@@ -4,7 +4,7 @@ import InputBadges from '../components/InputBadges';
 import Input from '../elements/Input';
 import Button from "../elements/Button";
 import useInputs from '../hooks/useInputs';
-import { Fragment, SyntheticEvent, useCallback, useState } from 'react';
+import { SyntheticEvent, useCallback, useState } from 'react';
 import { getObjFromKeyArr, getRandomInt } from '../utils';
 import OptionButtons from "../elements/OptionButtons";
 import useOptionButtons from "../hooks/useOptionButtons";
@@ -117,44 +117,49 @@ function RandomResult() {
           </ContentSection>
         ))}
       </ContentSection>
-      <ContentSection title="🛠️ 조건 설정"  styleTheme="wrapContent">
-        {dataTypeKeyNames.map((dataTypeKeyName: string, i) => (
-          <ContentSection
-            key={dataTypeKeyName}
-            title={`${dataTypes[i].korName} 선택`}
-          >
-            <OptionButtons
-              key={`${dataTypeKeyName}-exceptions`}
-              dataType={dataTypeKeyName}
-              dataList={inputDataList[dataTypeKeyName]}
-              selectedList={selectedExceptions[dataTypeKeyName]}
-              onSelect={onSelectException}
-            />
-          </ContentSection>
-        ))}
-
-        <ButtonWrapper>
-          <Button onClick={addException} styleTheme="primary">선택한 조건 추가</Button>
-          <Button onClick={resetExceptions} styleTheme="primaryLine">조건 재설정</Button>
-        </ButtonWrapper>
-        
-        <ContentSection
-          title="추가된 조건"
-          styleTheme="wrapContent"
-        >
-          <List
-            dataList={exceptions}
-            listType="dl"
-          >
-            {({memberName, caseName}) => (
-              <ExceptionItem>            
-                <dt>{memberName}</dt>
-                <dd>{caseName.join(', ')}</dd>
-              </ExceptionItem>
-            )}        
-          </List>
+      {
+        inputDataList.memberName.length > 0 &&
+        inputDataList.caseName.length > 0 &&
+        <ContentSection title="🛠️ 조건 설정"  styleTheme="wrapContent">
+          {dataTypeKeyNames.map((dataTypeKeyName: string, i) => (
+            <ContentSection
+              key={dataTypeKeyName}
+              title={`${dataTypes[i].korName} 선택`}
+            >
+              <OptionButtons
+                key={`${dataTypeKeyName}-exceptions`}
+                dataType={dataTypeKeyName}
+                dataList={inputDataList[dataTypeKeyName]}
+                selectedList={selectedExceptions[dataTypeKeyName]}
+                onSelect={onSelectException}
+              />
+            </ContentSection>
+          ))}
+          <ButtonWrapper>
+            <Button onClick={addException} styleTheme="primary">선택한 조건 추가</Button>
+            <Button onClick={resetExceptions} styleTheme="primaryLine">조건 재설정</Button>
+          </ButtonWrapper>
+          {
+            exceptions.length > 0 &&
+            <ContentSection
+              title="추가된 조건"
+              styleTheme="wrapContent"
+            >
+              <List
+                dataList={exceptions}
+                listType="dl"
+              >
+                {({memberName, caseName}) => (
+                  <ExceptionItem>            
+                    <dt>{memberName}</dt>
+                    <dd>{caseName.join(', ')}</dd>
+                  </ExceptionItem>
+                )}        
+              </List>
+            </ContentSection>
+          }
         </ContentSection>
-      </ContentSection>
+      }
       {
         caseIndexResults.length > 0 && 
         <ContentSection
@@ -176,16 +181,20 @@ function RandomResult() {
           </List>
         </ContentSection>
       }
-      <ButtonWrapper>
-        <Button
-          onClick={onClickGetResult}
-          sizeType="large"
-          styleTheme="primary"
-        >{
-          caseIndexResults.length > 0
-            ? '🎲 다시 뽑기 🎲' : '🎲 랜덤 뽑기 🎲'
-        }</Button>
-      </ButtonWrapper>
+      {
+        inputDataList.memberName.length > 0 &&
+        inputDataList.caseName.length > 0 &&
+        <ButtonWrapper>
+          <Button
+            onClick={onClickGetResult}
+            sizeType="large"
+            styleTheme="primary"
+          >{
+            caseIndexResults.length > 0
+              ? '🎲 다시 뽑기 🎲' : '🎲 랜덤 뽑기 🎲'
+          }</Button>
+        </ButtonWrapper>
+      }
     </div>
   )
 }

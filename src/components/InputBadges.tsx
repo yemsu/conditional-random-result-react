@@ -26,7 +26,7 @@ function InputBadges(props: InputBadgesProps) {
         <Button type="submit">추가</Button>
       </InputArea>
       {
-        dataList &&
+        dataList.length > 0 &&
         <BadgeListArea>
           <List dataList={dataList} direction="row">
             {(data) => <Badge>{ data }</Badge>}
