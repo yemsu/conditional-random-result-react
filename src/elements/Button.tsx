@@ -48,6 +48,7 @@ const styleThemeMap = {
     ButtonStyled: css`
       border: 1px solid var(--primary);
       color: var(--primary);
+      font-weight: var(--font-weight-S-bold);
     `
   }
 }
