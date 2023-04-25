@@ -4,7 +4,7 @@ import InputBadges from '../components/InputBadges';
 import Input from '../elements/Input';
 import Button from "../elements/Button";
 import useInputs from '../hooks/useInputs';
-import { SyntheticEvent, useCallback, useState } from 'react';
+import { SyntheticEvent, useCallback, useEffect, useState } from 'react';
 import { getObjFromKeyArr, getRandomInt } from '../utils';
 import OptionButtons from "../elements/OptionButtons";
 import useOptionButtons from "../hooks/useOptionButtons";
@@ -13,6 +13,7 @@ import { Forms, OptionButtonsState } from "../types/common";
 import List from "../elements/List";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { STORAGE_NAME } from "../constants/clientStorage";
+import RollingText from "../elements/RollingText";
 
 function RandomResult() {
   const dataTypes = [
@@ -37,6 +38,9 @@ function RandomResult() {
   // result
   const [caseIndexResults, setCaseIndexResults] = useState<number[]>([])
   const [saveCaseIndexResults, deleteSaveCaseIndexResults ] = useLocalStorage<number[]>(STORAGE_NAME.CASE_INDEX_RESULTS, setCaseIndexResults)
+  // rolling text
+  const [isStartTextRolling, setIsStartTextRolling] = useState(false)
+  const TEXT_ROLLING_TIME = 3000
 
   const onSubmit = useCallback((e: SyntheticEvent, dataType: string) => {
     e.preventDefault()
@@ -93,6 +97,10 @@ function RandomResult() {
     
     setCaseIndexResults(memberResults)
     saveCaseIndexResults(memberResults)
+    setIsStartTextRolling(true)
+    setTimeout(() => {
+      setIsStartTextRolling(false)
+    }, TEXT_ROLLING_TIME)
   }, [inputDataList, caseIndexResults])
 
   const deleteException = useCallback((i: number) => {
@@ -192,7 +200,14 @@ function RandomResult() {
             {(caseIndexResult: number, i: number) => (
               <ResultItem>
                 <dt>{ inputDataList.memberName[i] }</dt>
-                <dd>{ inputDataList.caseName[caseIndexResult] || '🎉' }</dd>
+                <dd>
+                  <RollingText
+                    rollingTextList={inputDataList.caseName}
+                    text={inputDataList.caseName[caseIndexResult] || '🎉'}
+                    isStartRolling={isStartTextRolling}
+                    rollingTime={TEXT_ROLLING_TIME + (500 * i)}
+                  />
+                </dd>
               </ResultItem>
             )}
           </List>
