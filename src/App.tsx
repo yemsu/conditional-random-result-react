@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import './styles/var.css'
 import GlobalStyle from './global-style'
 import RandomResult from './pages/RandomResult';
 

@@ -1,0 +1,14 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/variable/pretendardvariable-dynamic-subset.css");
+
+:root {
+  --font-family: 'Pretendard Variable';
+
+  --primary-hsl: 150, 60%, 50%;
+  --primary: hsl(var(--primary-hsl));
+
+  --gray-100: #333;
+  --gray-400: #666;
+  --gray-900: #f6f6f6;
+
+  --br-m: 5px;
+}

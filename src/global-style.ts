@@ -9,7 +9,7 @@ export default createGlobalStyle`
 }
 body {
   line-height: 1.6;
-  font-family: 'Pretendard Variable';
+  font-family: var(--font-family);
   font-size: 16px;
   color: #333;
 }
@@ -44,15 +44,5 @@ button {
   border: none;
   background-color: transparent;
   cursor: pointer;
-}
-:root {
-  --primary-hsl: 150, 60%, 50%;
-  --primary: hsl(var(--primary-hsl));
-
-  --gray-100: #333;
-  --gray-400: #666;
-  --gray-900: #f6f6f6;
-
-  --br-m: 5px;
 }
 `;
