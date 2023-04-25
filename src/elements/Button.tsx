@@ -6,7 +6,7 @@ interface ButtonProps {
   type?: 'button' | 'submit'
   children: ReactNode
   onClick?: (e: SyntheticEvent) => void
-  styleTheme?: 'normal' | 'primary' | 'primaryLine'
+  styleTheme?: 'normal' | 'primary' | 'primaryLine' | 'text'
   sizeType?: 'medium' | 'large' 
 }
 
@@ -23,7 +23,7 @@ function Button(props: ButtonProps) {
     <ButtonStyled
       type={type}
       onClick={onClick}
-      theme={styleThemeMap[styleTheme]}
+      theme={styleTheme}
       size={sizeStyleMap[sizeType]}
     >
       { children }
@@ -31,7 +31,7 @@ function Button(props: ButtonProps) {
   )
 }
 
-const styleThemeMap = {
+const styleThemeMap: {[key: string]: StyleMap} = {
   normal: {
     ButtonStyled: css`
       border-color: var(--gray-400);
@@ -50,10 +50,13 @@ const styleThemeMap = {
       color: var(--primary);
       font-weight: var(--font-weight-S-bold);
     `
+  },
+  text: {
+    ButtonStyled: css``
   }
 }
 
-const sizeStyleMap = {
+const sizeStyleMap: {[key: string]: StyleMap} = {
   medium: {
     ButtonStyled: css`
       padding: 0 10px;
@@ -71,10 +74,15 @@ const sizeStyleMap = {
 }
 
 const ButtonStyled = styled.button<{size: StyleMap}>`
-  border: 1px solid;
-  border-radius: var(--br-m);
-  transition: 0.1s;
-  ${(props) => props.theme.ButtonStyled}
+transition: 0.1s;
+  ${(props) => (
+    !props.theme.includes('text') &&
+    css`
+      border: 1px solid;
+      border-radius: var(--br-m);
+    `
+  )}
+  ${(props) => styleThemeMap[props.theme].ButtonStyled}
   ${(props) => props.size.ButtonStyled}
   &:hover {
     opacity: 0.7;

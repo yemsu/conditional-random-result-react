@@ -95,6 +95,17 @@ function RandomResult() {
     saveCaseIndexResults(memberResults)
   }, [inputDataList, caseIndexResults])
 
+  const deleteException = useCallback((i: number) => {
+    const getResult = (prev: OptionButtonsState[]) => (
+      prev.filter((
+        _: OptionButtonsState,
+        exceptionIndex: number
+      ) => exceptionIndex !== i)
+    )
+    setExceptions(getResult)
+    saveExceptionData(getResult(exceptions))
+  }, [exceptions])
+
   return (
     <div>
       <H1TitleWrapper>
@@ -149,10 +160,16 @@ function RandomResult() {
                 dataList={exceptions}
                 listType="dl"
               >
-                {({memberName, caseName}) => (
+                {({memberName, caseName}, i) => (
                   <ExceptionItem>            
                     <dt>{memberName}</dt>
-                    <dd>{caseName.join(', ')}</dd>
+                    <dd>
+                      {caseName.join(', ')}
+                      <Button
+                        onClick={() => deleteException(i)}
+                        styleTheme="text"
+                      >삭제</Button>
+                    </dd>
                   </ExceptionItem>
                 )}        
               </List>
@@ -223,6 +240,11 @@ const ExceptionItem = styled.div`
     &:after {
       content: ':';
     }
+  }
+  dd {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
   }
 `
 
