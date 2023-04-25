@@ -59,7 +59,7 @@ const themeStyles = {
       > .area-content {
         margin-top: 5px;
         padding: 10px;
-        border: 1px solid var(--gray-900);
+        border: 1px solid var(--gray-800);
         border-radius: var(--br-m);
       }
     `,
