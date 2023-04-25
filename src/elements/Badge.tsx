@@ -15,9 +15,11 @@ function Badge(props: BadgeProps) {
 }
 
 const BadgeStyled = styled.span`
-    padding: 0 8px;
-    background-color: var(--gray-900);
-    border-radius: 5px;
+  display: inline-block;
+  padding: 0 8px;
+  background-color: var(--gray-900);
+  border-radius: 5px;
+  line-height: 22px;
 `
 
 export default Badge

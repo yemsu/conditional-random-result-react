@@ -23,7 +23,7 @@ function OptionButtons(props: OptionButtonsProps) {
     >
       {(option) => (
         <Button
-          styleTheme={selectedList.includes(option) ? 'selected' : 'normal'}
+          styleTheme={selectedList.includes(option) ? 'primary' : 'normal'}
           onClick={() => onSelect(option, dataType)}
         >{ option }</Button>
       )}

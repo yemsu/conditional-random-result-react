@@ -97,13 +97,16 @@ function RandomResult() {
 
   return (
     <div>
-      <h1>조건 뢴듬 뽑기</h1>
-      <ContentSection title="기본 설정">
-        <Button onClick={onClickResetInputData}>전체 재설정</Button>
+      <H1TitleWrapper>
+        <h1>조건 랜덤 뽑기 🫣</h1>
+        <Button onClick={onClickResetInputData} styleTheme="primaryLine">전체 재설정</Button>
+      </H1TitleWrapper>
+      <ContentSection title="⚙️ 기본 설정" styleTheme="wrapContent">
         {dataTypeKeyNames.map((dataTypeKeyName: string, i) => (
           <ContentSection
             key={`${dataTypeKeyName}-addData`}
             title={dataTypes[i].korName}
+            styleTheme="row"
           >
             <InputBadges
               InputComp={getInputComp(dataTypeKeyName)}
@@ -114,12 +117,12 @@ function RandomResult() {
           </ContentSection>
         ))}
       </ContentSection>
-      <ContentSection
-        title="조건 설정"
-      >
+      <ContentSection title="🛠️ 조건 설정"  styleTheme="wrapContent">
         {dataTypeKeyNames.map((dataTypeKeyName: string, i) => (
-          <Fragment key={dataTypeKeyName}>
-            <h3>{ dataTypes[i].korName }</h3>
+          <ContentSection
+            key={dataTypeKeyName}
+            title={`${dataTypes[i].korName} 선택`}
+          >
             <OptionButtons
               key={`${dataTypeKeyName}-exceptions`}
               dataType={dataTypeKeyName}
@@ -127,43 +130,105 @@ function RandomResult() {
               selectedList={selectedExceptions[dataTypeKeyName]}
               onSelect={onSelectException}
             />
-          </Fragment>
+          </ContentSection>
         ))}
-        <Button onClick={addException}>선택한 조건 추가</Button>
-        <Button onClick={resetExceptions}>조건 재설정</Button>
+
+        <ButtonWrapper>
+          <Button onClick={addException} styleTheme="primary">선택한 조건 추가</Button>
+          <Button onClick={resetExceptions} styleTheme="primaryLine">조건 재설정</Button>
+        </ButtonWrapper>
         
-        <h3>추가된 조건</h3>
-        <List
-          dataList={exceptions}
+        <ContentSection
+          title="추가된 조건"
+          styleTheme="wrapContent"
         >
-          {({memberName, caseName}) => (
-            <>            
-              {memberName} / {caseName.join(', ')}
-            </>
-          )}        
-        </List>
+          <List
+            dataList={exceptions}
+            listType="dl"
+          >
+            {({memberName, caseName}) => (
+              <ExceptionItem>            
+                <dt>{memberName}</dt>
+                <dd>{caseName.join(', ')}</dd>
+              </ExceptionItem>
+            )}        
+          </List>
+        </ContentSection>
       </ContentSection>
       {
         caseIndexResults.length > 0 && 
         <ContentSection
           title="뽑기 결과"
+          align="center"
+          bg="primary-200"
         >
-          <List dataList={caseIndexResults}>
+          <List
+            dataList={caseIndexResults}
+            direction="row"
+            listType="dl"
+          >
             {(caseIndexResult: number, i: number) => (
-              <>
-                <span>{ inputDataList.memberName[i] }</span>
-                <span>{ inputDataList.caseName[caseIndexResult] }</span>
-              </>
+              <ResultItem>
+                <dt>{ inputDataList.memberName[i] }</dt>
+                <dd>{ inputDataList.caseName[caseIndexResult] || '🎉' }</dd>
+              </ResultItem>
             )}
           </List>
         </ContentSection>
       }
-      <Button onClick={onClickGetResult}>{
-        caseIndexResults.length > 0
-          ? '다시 뽑기' : '랜덤 뽑기'
-      }</Button>
+      <ButtonWrapper>
+        <Button
+          onClick={onClickGetResult}
+          sizeType="large"
+          styleTheme="primary"
+        >{
+          caseIndexResults.length > 0
+            ? '🎲 다시 뽑기 🎲' : '🎲 랜덤 뽑기 🎲'
+        }</Button>
+      </ButtonWrapper>
     </div>
   )
 }
+
+const H1TitleWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  margin-bottom: 10px;
+`
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  margin-top: 20px;
+`
+
+const ExceptionItem = styled.div`
+  display: flex;
+  gap: 5px;
+  dt {
+    &:before {
+      content: '❗';
+    }
+    &:after {
+      content: ':';
+    }
+  }
+`
+
+const ResultItem = styled.div`
+  padding: 5px;
+  background-color: var(--white);
+  border-radius: var(--br-m);
+  dt {
+    font-size: var(--font-size-M-L);
+  }
+  dd {
+    font-size: var(--font-size-X-L);
+    font-weight: var(--font-weight-bold);
+    color: var(--primary);
+  }
+`
 
 export default RandomResult

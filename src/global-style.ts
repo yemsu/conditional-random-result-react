@@ -10,7 +10,7 @@ export default createGlobalStyle`
 body {
   line-height: 1.6;
   font-family: var(--font-family);
-  font-size: 16px;
+  font-size: var(--font-size-M);
   color: #333;
 }
 a, button, input {
@@ -21,17 +21,14 @@ a, button, input {
 li {
   list-style: none;
 }
-h1, h2, h3, h4 {
-  margin-bottom: 5px;
-}
 h1 {
-  font-size: 1.2em;
+  font-size: var(--font-size-X-L);
 }
 h2 {
-  font-size: 1.1em;
+  font-size: var(--font-size-L);
 }
 h3 {
-  font-size: 1em;
+  font-size: var(--font-size-M-L);
 }
 /* input */
 input {
