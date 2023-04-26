@@ -28,13 +28,15 @@ function RandomResult() {
     getObjFromKeyArr<string[]>(dataTypeKeyNames, []),
     setForms
   )
+  // input focus
+  const [focusInputDataType, setFocusInputDataType] = useState('')
   // selected exceptions
   const [selectedExceptions, onSelectException, resetSelectedExceptions] = useOptionButtons(
     getObjFromKeyArr<string[]>(dataTypeKeyNames, [])
   )
   // exceptions
   const [exceptions, setExceptions] = useState<OptionButtonsState[]>([])
-  const [saveExceptionData, deleteSavedExceptionData ] = useLocalStorage<OptionButtonsState[]>(STORAGE_NAME.SELECTED_EXCEPTIONS, setExceptions)
+  const [saveExceptionData, deleteSavedExceptionData] = useLocalStorage<OptionButtonsState[]>(STORAGE_NAME.SELECTED_EXCEPTIONS, setExceptions)
   // result
   const [caseIndexResults, setCaseIndexResults] = useState<number[]>([])
   const [saveCaseIndexResults, deleteSaveCaseIndexResults ] = useLocalStorage<number[]>(STORAGE_NAME.CASE_INDEX_RESULTS, setCaseIndexResults)
@@ -44,16 +46,26 @@ function RandomResult() {
 
   const onSubmit = useCallback((e: SyntheticEvent, dataType: string) => {
     e.preventDefault()
-    addInputData(forms[dataType], dataType)
+    
+    const newData = forms[dataType].trim()
+    if(forms[dataType] === '') {
+      alert('값을 입력해 주세요!')
+      setFocusInputDataType(dataType)
+      setTimeout(() => {
+        setFocusInputDataType('')
+      }, 500);
+      return
+    }
+    if(inputDataList[dataType].includes(newData)) {
+      alert('이미 존재하는 값입니다. 값을 다르게 입력해주세요!')
+      setFocusInputDataType(dataType)
+      setTimeout(() => {
+        setFocusInputDataType('')
+      }, 500);
+      return
+    }
+    addInputData(newData, dataType)
   }, [forms, inputDataList])
-
-  const getInputComp = useCallback((dataType: string) => (
-    <Input
-      name={dataType}
-      value={forms[dataType]}
-      onChange={onChange}
-    />
-  ), [forms, onChange])
 
   const addException = useCallback(() => {
     setExceptions(prev => [...prev, selectedExceptions])
@@ -113,6 +125,15 @@ function RandomResult() {
     setExceptions(getResult)
     saveExceptionData(getResult(exceptions))
   }, [exceptions])
+
+  const getInputComp = useCallback((dataType: string) => (
+    <Input
+      name={dataType}
+      value={forms[dataType]}
+      onChange={onChange}
+      isFocusOn={focusInputDataType === dataType}
+    />
+  ), [forms, onChange, focusInputDataType])
 
   return (
     <div>
