@@ -1,24 +1,30 @@
-import styled from "styled-components"
 import ContentSection from "../ContentSection"
 import InputBadges from "../InputBadges"
-import { ReactNode, SyntheticEvent } from "react"
+import { useContext } from "react"
+import Input from "../../elements/Input"
+import { RandomResultContext } from "../../context/RandomResultContext"
 
-interface BasicSettingContentProps {
-  dataTypeKeyNames: string[]
-  dataTypes: {[key: string]: string}[]
-  InputComp: (dataType: string) => ReactNode
-  inputDataList: {[key: string]: string[]} 
-  onSubmit: (e: SyntheticEvent, dataType: string) => void
-}
-
-function BasicSettingContent(props: BasicSettingContentProps) {
+function BasicSettingContent() {
+  const context = useContext(RandomResultContext)
+  if(!context) return null
   const {
+    forms,
+    onChange,
+    focusInputDataType,
     dataTypeKeyNames,
     dataTypes,
-    InputComp,
     inputDataList,
     onSubmit
-  } = props 
+  } = context
+
+  const InputComp = (dataType: string) => (
+    <Input
+      name={dataType}
+      value={forms[dataType]}
+      onChange={onChange}
+      isFocusOn={focusInputDataType === dataType}
+    />
+  )
 
   return (
     <ContentSection title="⚙️ 기본 설정" styleTheme="wrapContent">

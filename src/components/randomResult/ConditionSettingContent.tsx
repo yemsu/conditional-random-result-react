@@ -4,21 +4,11 @@ import ButtonWrapper from "../../elements/ButtonWrapper"
 import Button from "../../elements/Button"
 import OptionButtons from "../../elements/OptionButtons"
 import List from "../../elements/List"
-import { OptionButtonsState } from "../../types/common"
+import { useContext } from "react"
+import { RandomResultContext } from "../../context/RandomResultContext"
 
-interface ConditionSettingContentProps {
-  dataTypeKeyNames: string[]
-  exceptions: OptionButtonsState[]
-  dataTypes: {[key: string]: string}[]
-  inputDataList: {[key: string]: string[]}
-  selectedExceptions: {[key: string]: string[]}
-  onSelectException: (option:string, dataType: string) => void
-  addException: () => void
-  resetExceptions: () => void
-  deleteException: (i: number) => void
-}
-
-function ConditionSettingContent(props: ConditionSettingContentProps) {
+function ConditionSettingContent() {  const context = useContext(RandomResultContext)
+  if(!context) return null
   const {
     dataTypeKeyNames,
     exceptions,
@@ -29,8 +19,8 @@ function ConditionSettingContent(props: ConditionSettingContentProps) {
     addException,
     resetExceptions,
     deleteException,
-  } = props
-  
+  } = context
+
   return (
     <ContentSection title="🛠️ 조건 설정"  styleTheme="wrapContent">
       {dataTypeKeyNames.map((dataTypeKeyName: string, i) => (

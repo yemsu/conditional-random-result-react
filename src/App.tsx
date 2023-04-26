@@ -2,13 +2,16 @@ import styled from 'styled-components';
 import './styles/var.css'
 import GlobalStyle from './global-style'
 import RandomResult from './pages/RandomResult';
+import { RandomResultProvider } from './context/RandomResultContext';
 
 function App() {
   return (
       <>
         <GlobalStyle />
         <AppStyled>
-          <RandomResult />
+          <RandomResultProvider>
+            <RandomResult />
+          </RandomResultProvider>
         </AppStyled>
       </>
   );

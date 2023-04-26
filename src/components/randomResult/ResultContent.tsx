@@ -2,23 +2,19 @@ import styled from "styled-components"
 import ContentSection from "../ContentSection"
 import List from "../../elements/List"
 import RollingText from "../../elements/RollingText"
+import { useContext } from "react"
+import { RandomResultContext } from "../../context/RandomResultContext"
 
-interface ResultContentProps {
-  caseIndexResults: number[]
-  inputDataList: {[key: string]: string[]}
-  TEXT_ROLLING_TIME: number
-  isStartTextRolling: boolean
-}
-
-function ResultContent(props: ResultContentProps) {
+function ResultContent() {
+  const context = useContext(RandomResultContext)
+  if(!context) return null
   const {
     caseIndexResults,
     inputDataList,
     TEXT_ROLLING_TIME,
     isStartTextRolling,
-  } = props
+  } = context
 
-  if(caseIndexResults.length === 0) return null
   return (
     <ContentSection
       title="뽑기 결과"
