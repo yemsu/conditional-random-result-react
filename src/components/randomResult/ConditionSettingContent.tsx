@@ -7,8 +7,7 @@ import List from "../../elements/List"
 import { useContext } from "react"
 import { RandomResultContext } from "../../context/RandomResultContext"
 
-function ConditionSettingContent() {  const context = useContext(RandomResultContext)
-  if(!context) return null
+function ConditionSettingContent() {
   const {
     dataTypeKeyNames,
     exceptions,
@@ -19,7 +18,7 @@ function ConditionSettingContent() {  const context = useContext(RandomResultCon
     addException,
     resetExceptions,
     deleteException,
-  } = context
+  } = useContext(RandomResultContext)
 
   return (
     <ContentSection title="🛠️ 조건 설정"  styleTheme="wrapContent">

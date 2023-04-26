@@ -5,8 +5,6 @@ import Input from "../../elements/Input"
 import { RandomResultContext } from "../../context/RandomResultContext"
 
 function BasicSettingContent() {
-  const context = useContext(RandomResultContext)
-  if(!context) return null
   const {
     forms,
     onChange,
@@ -15,7 +13,7 @@ function BasicSettingContent() {
     dataTypes,
     inputDataList,
     onSubmit
-  } = context
+  } = useContext(RandomResultContext)
 
   const InputComp = (dataType: string) => (
     <Input

@@ -6,15 +6,13 @@ import { useContext } from "react"
 import { RandomResultContext } from "../../context/RandomResultContext"
 
 function ResultContent() {
-  const context = useContext(RandomResultContext)
-  if(!context) return null
   const {
     caseIndexResults,
     inputDataList,
     TEXT_ROLLING_TIME,
     isStartTextRolling,
     timeGetResult,
-  } = context
+  } = useContext(RandomResultContext)
 
   return (
     <ContentSection

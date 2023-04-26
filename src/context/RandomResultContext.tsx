@@ -32,7 +32,32 @@ interface RandomResultContextType {
   deleteException: (i: number) => void
 }
 
-export const RandomResultContext = createContext<RandomResultContextType | null>(null)
+const defaultRandomResultContext = {
+  // data type
+  dataTypeKeyNames: [],
+  dataTypes: [],
+  // states
+  forms: {},
+  inputDataList: {},
+  selectedExceptions: {},
+  exceptions: [],
+  caseIndexResults: [],
+  isStartTextRolling: false,
+  focusInputDataType: '',
+  TEXT_ROLLING_TIME: 0,
+  timeGetResult: '',
+  // functions,
+  onSubmit: (e: SyntheticEvent, dataType: string) => {},
+  onChange: (e: SyntheticEvent) => {},
+  onSelectException: (option:string, dataType: string) => {},
+  addException: () => {},
+  onClickResetInputData: () => {},
+  onClickGetResult: () => {},
+  resetExceptions: () => {},
+  deleteException: (i: number) => {},
+}
+
+export const RandomResultContext = createContext<RandomResultContextType>(defaultRandomResultContext)
 
 export function RandomResultProvider({ children }: {children: ReactNode}) {
   const dataTypes = [
@@ -64,6 +89,8 @@ export function RandomResultProvider({ children }: {children: ReactNode}) {
   // rolling text
   const [isStartTextRolling, setIsStartTextRolling] = useState(false)
   const TEXT_ROLLING_TIME = 3000
+  // full result
+  const [isShowFullResult, setIsShowFullResult] = useState(false)
 
   const onSubmit = useCallback((e: SyntheticEvent, dataType: string) => {
     e.preventDefault()

@@ -8,14 +8,12 @@ import { useContext } from "react";
 import { RandomResultContext } from "../context/RandomResultContext";
 
 function RandomResult() {
-  const context = useContext(RandomResultContext)
-  if(!context) return null
   const {
     inputDataList,
     onClickGetResult,
     caseIndexResults,
     onClickResetInputData
-  } = context
+  } = useContext(RandomResultContext)
 
   const hasBasicData =  inputDataList.memberName.length > 0 && inputDataList.caseName.length > 0
 
