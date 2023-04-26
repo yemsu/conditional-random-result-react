@@ -4,16 +4,16 @@ import InputBadges from '../components/InputBadges';
 import Input from '../elements/Input';
 import Button from "../elements/Button";
 import useInputs from '../hooks/useInputs';
-import { SyntheticEvent, useCallback, useEffect, useState } from 'react';
+import { SyntheticEvent, useCallback, useState } from 'react';
 import { getObjFromKeyArr, getRandomInt } from '../utils';
-import OptionButtons from "../elements/OptionButtons";
 import useOptionButtons from "../hooks/useOptionButtons";
 import useInputBadges from "../hooks/useInputBadges";
 import { Forms, OptionButtonsState } from "../types/common";
-import List from "../elements/List";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { STORAGE_NAME } from "../constants/clientStorage";
 import ResultContent from "../components/randomResult/ResultContent";
+import ButtonWrapper from "../elements/ButtonWrapper";
+import ConditionSettingContent from "../components/randomResult/ConditionSettingContent";
 
 function RandomResult() {
   const dataTypes = [
@@ -135,6 +135,8 @@ function RandomResult() {
     />
   ), [forms, onChange, focusInputDataType])
 
+  const hasBasicData =  inputDataList.memberName.length > 0 && inputDataList.caseName.length > 0
+
   return (
     <div>
       <H1TitleWrapper>
@@ -158,53 +160,18 @@ function RandomResult() {
         ))}
       </ContentSection>
       {
-        inputDataList.memberName.length > 0 &&
-        inputDataList.caseName.length > 0 &&
-        <ContentSection title="🛠️ 조건 설정"  styleTheme="wrapContent">
-          {dataTypeKeyNames.map((dataTypeKeyName: string, i) => (
-            <ContentSection
-              key={dataTypeKeyName}
-              title={`${dataTypes[i].korName} 선택`}
-            >
-              <OptionButtons
-                key={`${dataTypeKeyName}-exceptions`}
-                dataType={dataTypeKeyName}
-                dataList={inputDataList[dataTypeKeyName]}
-                selectedList={selectedExceptions[dataTypeKeyName]}
-                onSelect={onSelectException}
-              />
-            </ContentSection>
-          ))}
-          <ButtonWrapper>
-            <Button onClick={addException} styleTheme="primary">선택한 조건 추가</Button>
-            <Button onClick={resetExceptions} styleTheme="primaryLine">조건 재설정</Button>
-          </ButtonWrapper>
-          {
-            exceptions.length > 0 &&
-            <ContentSection
-              title="추가된 조건"
-              styleTheme="wrapContent"
-            >
-              <List
-                dataList={exceptions}
-                listType="dl"
-              >
-                {({memberName, caseName}, i) => (
-                  <ExceptionItem>            
-                    <dt>{memberName}</dt>
-                    <dd>
-                      {caseName.join(', ')}
-                      <Button
-                        onClick={() => deleteException(i)}
-                        styleTheme="text"
-                      >삭제</Button>
-                    </dd>
-                  </ExceptionItem>
-                )}        
-              </List>
-            </ContentSection>
-          }
-        </ContentSection>
+        hasBasicData &&
+        <ConditionSettingContent 
+          dataTypeKeyNames={dataTypeKeyNames}
+          exceptions={exceptions}
+          dataTypes={dataTypes}
+          inputDataList={inputDataList}
+          selectedExceptions={selectedExceptions}
+          onSelectException={onSelectException}
+          addException={addException}
+          resetExceptions={resetExceptions}
+          deleteException={deleteException}
+        />
       }
       <ResultContent
         caseIndexResults={caseIndexResults}
@@ -213,8 +180,7 @@ function RandomResult() {
         isStartTextRolling={isStartTextRolling}
       />
       {
-        inputDataList.memberName.length > 0 &&
-        inputDataList.caseName.length > 0 &&
+        hasBasicData &&
         <ButtonWrapper>
           <Button
             onClick={onClickGetResult}
@@ -236,31 +202,5 @@ const H1TitleWrapper = styled.div`
   align-content: center;
   margin-bottom: 10px;
 `
-
-const ButtonWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  gap: 5px;
-  margin-top: 20px;
-`
-
-const ExceptionItem = styled.div`
-  display: flex;
-  gap: 5px;
-  dt {
-    &:before {
-      content: '❗';
-    }
-    &:after {
-      content: ':';
-    }
-  }
-  dd {
-    flex: 1;
-    display: flex;
-    justify-content: space-between;
-  }
-`
-
 
 export default RandomResult
