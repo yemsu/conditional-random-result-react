@@ -3,6 +3,7 @@
 :root {
   --font-family: 'Pretendard Variable';
 
+  --font-size-S: 12px;
   --font-size-M: 14px;
   --font-size-M-L: 1.1em;
   --font-size-L: 1.2em;
@@ -11,10 +12,11 @@
   --font-weight-S-bold: 500;
   --font-weight-bold: 700;
 
+  --primary-hs: 155, 65%;
   --primary-hsl: 155, 65%, 48%;
   --primary: hsl(var(--primary-hsl));
-  --primary-100: hsl(var(--primary-hsl), 0.1);
-  --primary-200: hsla(var(--primary-hsl), 0.2);
+  --primary-100: hsl(var(--primary-hs), 95%);
+  --primary-200: hsl(var(--primary-hs), 90%);
 
   --gray-100: #333;
   --gray-400: #666;
