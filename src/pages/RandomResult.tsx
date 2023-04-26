@@ -13,7 +13,7 @@ import { Forms, OptionButtonsState } from "../types/common";
 import List from "../elements/List";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { STORAGE_NAME } from "../constants/clientStorage";
-import RollingText from "../elements/RollingText";
+import ResultContent from "../components/randomResult/ResultContent";
 
 function RandomResult() {
   const dataTypes = [
@@ -206,34 +206,12 @@ function RandomResult() {
           }
         </ContentSection>
       }
-      {
-        caseIndexResults.length > 0 && 
-        <ContentSection
-          title="뽑기 결과"
-          align="center"
-          bg="primary-200"
-        >
-          <List
-            dataList={caseIndexResults}
-            direction="row"
-            listType="dl"
-          >
-            {(caseIndexResult: number, i: number) => (
-              <ResultItem>
-                <dt>{ inputDataList.memberName[i] }</dt>
-                <dd>
-                  <RollingText
-                    rollingTextList={inputDataList.caseName}
-                    text={inputDataList.caseName[caseIndexResult] || '🎉'}
-                    isStartRolling={isStartTextRolling}
-                    rollingTime={TEXT_ROLLING_TIME + (500 * i)}
-                  />
-                </dd>
-              </ResultItem>
-            )}
-          </List>
-        </ContentSection>
-      }
+      <ResultContent
+        caseIndexResults={caseIndexResults}
+        inputDataList={inputDataList}
+        TEXT_ROLLING_TIME={TEXT_ROLLING_TIME}
+        isStartTextRolling={isStartTextRolling}
+      />
       {
         inputDataList.memberName.length > 0 &&
         inputDataList.caseName.length > 0 &&
@@ -284,18 +262,5 @@ const ExceptionItem = styled.div`
   }
 `
 
-const ResultItem = styled.div`
-  padding: 5px;
-  background-color: var(--white);
-  border-radius: var(--br-m);
-  dt {
-    font-size: var(--font-size-M-L);
-  }
-  dd {
-    font-size: var(--font-size-X-L);
-    font-weight: var(--font-weight-bold);
-    color: var(--primary);
-  }
-`
 
 export default RandomResult
