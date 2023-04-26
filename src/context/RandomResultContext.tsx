@@ -20,6 +20,7 @@ interface RandomResultContextType {
   isStartTextRolling: boolean
   focusInputDataType: string
   TEXT_ROLLING_TIME: number
+  timeGetResult: string
   // functions
   onSubmit: (e: SyntheticEvent, dataType: string) => void
   onChange: (e: SyntheticEvent) => void
@@ -58,6 +59,8 @@ export function RandomResultProvider({ children }: {children: ReactNode}) {
   // result
   const [caseIndexResults, setCaseIndexResults] = useState<number[]>([])
   const [saveCaseIndexResults, deleteSaveCaseIndexResults ] = useLocalStorage<number[]>(STORAGE_NAME.CASE_INDEX_RESULTS, setCaseIndexResults)
+  const [timeGetResult, setTimeGetResult] = useState('')
+  const [saveTimeGetResult] = useLocalStorage(STORAGE_NAME.TIME_GET_RESULT, setTimeGetResult)
   // rolling text
   const [isStartTextRolling, setIsStartTextRolling] = useState(false)
   const TEXT_ROLLING_TIME = 3000
@@ -127,6 +130,11 @@ export function RandomResultProvider({ children }: {children: ReactNode}) {
     
     setCaseIndexResults(memberResults)
     saveCaseIndexResults(memberResults)
+
+    const time = new Date().toLocaleString()
+    setTimeGetResult(time)
+    saveTimeGetResult(time)
+
     setIsStartTextRolling(true)
     setTimeout(() => {
       setIsStartTextRolling(false)
@@ -156,6 +164,7 @@ export function RandomResultProvider({ children }: {children: ReactNode}) {
       isStartTextRolling,
       focusInputDataType,
       TEXT_ROLLING_TIME,
+      timeGetResult,
       onSubmit,
       onChange,
       onSelectException,

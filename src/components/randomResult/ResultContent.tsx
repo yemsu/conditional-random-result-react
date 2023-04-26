@@ -13,6 +13,7 @@ function ResultContent() {
     inputDataList,
     TEXT_ROLLING_TIME,
     isStartTextRolling,
+    timeGetResult,
   } = context
 
   return (
@@ -40,6 +41,7 @@ function ResultContent() {
           </ResultItem>
         )}
       </List>
+      <DateText>🕓{ timeGetResult }</DateText>
     </ContentSection>
   )
 }
@@ -56,6 +58,11 @@ const ResultItem = styled.div`
     font-weight: var(--font-weight-bold);
     color: var(--primary);
   }
+`
+
+const DateText = styled.p`
+  margin-top: 10px;
+  font-size: var(--font-size-S);
 `
 
 export default ResultContent
