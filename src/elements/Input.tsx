@@ -1,18 +1,29 @@
-import { SyntheticEvent, memo } from "react"
+import { SyntheticEvent, memo, useEffect, useRef } from "react"
 import styled from "styled-components"
 
 interface InputProps {
   name: string
   value: string
   onChange: (e: SyntheticEvent) => void
+  isFocusOn?: boolean
 }
 
 function Input(props: InputProps) {
   const {
     name,
     value,
-    onChange
+    onChange,
+    isFocusOn
   } = props
+
+  const inputRef = useRef<HTMLInputElement | null>(null)
+
+  useEffect(() => {
+    if(!isFocusOn) return
+    isFocusOn && inputRef?.current?.focus()
+  }, [isFocusOn])
+
+
   return (
     <InputWrapper>
       <StyledInput
@@ -20,6 +31,7 @@ function Input(props: InputProps) {
         name={name}
         value={value}
         onChange={onChange}
+        ref={inputRef}
       />
     </InputWrapper>
   )
