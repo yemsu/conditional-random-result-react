@@ -14,6 +14,7 @@ import { STORAGE_NAME } from "../constants/clientStorage";
 import ResultContent from "../components/randomResult/ResultContent";
 import ButtonWrapper from "../elements/ButtonWrapper";
 import ConditionSettingContent from "../components/randomResult/ConditionSettingContent";
+import BasicSettingContent from "../components/randomResult/BasicSettingContent";
 
 function RandomResult() {
   const dataTypes = [
@@ -126,7 +127,7 @@ function RandomResult() {
     saveExceptionData(getResult(exceptions))
   }, [exceptions])
 
-  const getInputComp = useCallback((dataType: string) => (
+  const InputComp = useCallback((dataType: string) => (
     <Input
       name={dataType}
       value={forms[dataType]}
@@ -143,22 +144,13 @@ function RandomResult() {
         <h1>조건 랜덤 뽑기 🫣</h1>
         <Button onClick={onClickResetInputData} styleTheme="primaryLine">전체 재설정</Button>
       </H1TitleWrapper>
-      <ContentSection title="⚙️ 기본 설정" styleTheme="wrapContent">
-        {dataTypeKeyNames.map((dataTypeKeyName: string, i) => (
-          <ContentSection
-            key={`${dataTypeKeyName}-addData`}
-            title={dataTypes[i].korName}
-            styleTheme="row"
-          >
-            <InputBadges
-              InputComp={getInputComp(dataTypeKeyName)}
-              dataType={dataTypeKeyName}
-              dataList={inputDataList[dataTypeKeyName]}
-              onSubmit={onSubmit}
-            />
-          </ContentSection>
-        ))}
-      </ContentSection>
+      <BasicSettingContent
+        dataTypeKeyNames={dataTypeKeyNames}
+        dataTypes={dataTypes}
+        InputComp={InputComp}
+        inputDataList={inputDataList}
+        onSubmit={onSubmit}
+      />
       {
         hasBasicData &&
         <ConditionSettingContent 
