@@ -21,7 +21,7 @@ function ConditionSettingContent() {
   } = useContext(RandomResultContext)
 
   return (
-    <ContentSection title="🛠️ 조건 설정"  styleTheme="wrapContent">
+    <ContentSection title="🛠️ 예외 설정"  styleTheme="wrapContent">
       {dataTypeKeyNames.map((dataTypeKeyName: string, i) => (
         <ContentSection
           key={dataTypeKeyName}
@@ -37,13 +37,13 @@ function ConditionSettingContent() {
         </ContentSection>
       ))}
       <ButtonWrapper>
-        <Button onClick={addException} styleTheme="primary">선택한 조건 추가</Button>
-        <Button onClick={resetExceptions} styleTheme="primaryLine">조건 재설정</Button>
+        <Button onClick={addException} styleTheme="primary">추가</Button>
+        <Button onClick={resetExceptions} styleTheme="primaryLine">취소</Button>
       </ButtonWrapper>
       {
         exceptions.length > 0 &&
         <ContentSection
-          title="추가된 조건"
+          title="추가된 예외 설정"
           styleTheme="wrapContent"
         >
           <List
