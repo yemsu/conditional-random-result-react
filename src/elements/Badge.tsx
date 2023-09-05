@@ -1,7 +1,8 @@
+import { ReactNode } from "react"
 import styled from "styled-components"
 
 interface BadgeProps {
-  children: string
+  children: ReactNode
 }
 
 function Badge(props: BadgeProps) {

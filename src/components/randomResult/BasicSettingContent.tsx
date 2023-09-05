@@ -8,6 +8,7 @@ function BasicSettingContent() {
   const {
     forms,
     onChange,
+    deleteMember,
     focusInputDataType,
     dataTypeKeyNames,
     dataTypes,
@@ -37,6 +38,7 @@ function BasicSettingContent() {
             dataType={dataTypeKeyName}
             dataList={inputDataList[dataTypeKeyName]}
             onSubmit={onSubmit}
+            onDelete={deleteMember}
           />
         </ContentSection>
       ))}

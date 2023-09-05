@@ -1,4 +1,4 @@
-import { ReactNode, SyntheticEvent } from "react"
+import { ReactNode, SyntheticEvent, useCallback } from "react"
 import styled from "styled-components"
 import Button from "../elements/Button"
 import Badge from "../elements/Badge"
@@ -9,6 +9,7 @@ interface InputBadgesProps {
   dataType: string
   dataList: string[]
   onSubmit: (e: SyntheticEvent, dataType: string) => void
+  onDelete: (data: string, dataType: string) => void
 }
 
 function InputBadges(props: InputBadgesProps) {
@@ -16,9 +17,15 @@ function InputBadges(props: InputBadgesProps) {
     InputComp,
     dataType,
     dataList,
-    onSubmit
+    onSubmit,
+    onDelete
   } = props
   
+  const deleteBadge = useCallback((e: SyntheticEvent, data: string) => {
+    e.preventDefault()
+    onDelete(data, dataType)
+  }, [dataList])
+
   return (
     <FormStyled onSubmit={(e) => onSubmit(e, dataType)}>
       <InputArea>
@@ -29,7 +36,15 @@ function InputBadges(props: InputBadgesProps) {
         dataList.length > 0 &&
         <BadgeListArea>
           <List dataList={dataList} direction="row">
-            {(data) => <Badge>{ data }</Badge>}
+            {(data, i) => <BadgeButtonStyled
+              onClick={(e) => deleteBadge(e, data)}
+              title="클릭하여 제거"
+            >
+              <Badge>
+                { data }
+                <SpanIconStyled>✖️</SpanIconStyled>
+              </Badge>
+            </BadgeButtonStyled>}
           </List>
         </BadgeListArea>
       }
@@ -48,6 +63,16 @@ const InputArea = styled.div`
 
 const BadgeListArea = styled.div`
   margin-top: 10px;
+`
+
+const BadgeButtonStyled = styled.button`
+  
+`
+
+const SpanIconStyled = styled.span`
+  margin-left: 0.8em;
+  font-size: 0.1em;
+  filter: brightness(1.8) saturate(0);
 `
 
 export default InputBadges

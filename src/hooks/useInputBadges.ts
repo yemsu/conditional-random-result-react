@@ -8,7 +8,8 @@ type InputBadges = {[key: string]: string[]}
 type UseInputBadges = [
   inputBadges: InputBadges,
   addInputBadge: (option:string, dataType: string) => void,
-  resetInputBadge: () => void
+  resetInputBadge: () => void,
+  removeInputBadge: (data: string, dataType: string) => void
 ]
 
 function useInputBadges(
@@ -30,12 +31,21 @@ function useInputBadges(
     setForms((prev) => ({...prev, [dataType]: ''}))
   }, [inputBadges])
 
+  const removeInputBadge = useCallback((data: string, dataType: string) => {
+    const getResult = (prev: InputBadges) => ({
+      ...prev,
+      [dataType]: prev[dataType].filter(_data => data !== _data)
+    })
+    setInputBadges(getResult)
+    saveLocalStorage(getResult(inputBadges))
+  }, [inputBadges])
+
   const resetInputBadge = useCallback(() => {
     setInputBadges(initialInputBadges)
     deleteLocalStorage()
   }, [])
 
-  return [inputBadges, addInputBadge, resetInputBadge]
+  return [inputBadges, addInputBadge, resetInputBadge, removeInputBadge]
 }
 
 export default useInputBadges
