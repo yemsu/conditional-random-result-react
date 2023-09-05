@@ -24,6 +24,7 @@ interface RandomResultContextType {
   // functions
   onSubmit: (e: SyntheticEvent, dataType: string) => void
   onChange: (e: SyntheticEvent) => void
+  deleteMember: (data: string, dataType: string) => void
   onSelectException: (option:string, dataType: string) => void
   addException: () => void
   onClickResetInputData: () => void
@@ -49,6 +50,7 @@ const defaultRandomResultContext = {
   // functions,
   onSubmit: (e: SyntheticEvent, dataType: string) => {},
   onChange: (e: SyntheticEvent) => {},
+  deleteMember: (data: string, dataType: string) => {},
   onSelectException: (option:string, dataType: string) => {},
   addException: () => {},
   onClickResetInputData: () => {},
@@ -68,7 +70,7 @@ export function RandomResultProvider({ children }: {children: ReactNode}) {
   const [forms, onChange, reset, setForms] = useInputs<Forms>(
     getObjFromKeyArr<string>(dataTypeKeyNames, '')
   )
-  const [inputDataList, addInputData, resetInputData] = useInputBadges(
+  const [inputDataList, addInputData, resetInputData, removeInputBadge] = useInputBadges(
     getObjFromKeyArr<string[]>(dataTypeKeyNames, []),
     setForms
   )
@@ -168,6 +170,10 @@ export function RandomResultProvider({ children }: {children: ReactNode}) {
     }, TEXT_ROLLING_TIME)
   }, [inputDataList, caseIndexResults])
 
+  const deleteMember = useCallback((data: string, dataType: string) => {
+    removeInputBadge(data, dataType)
+  }, [inputDataList])
+
   const deleteException = useCallback((i: number) => {
     const getResult = (prev: OptionButtonsState[]) => (
       prev.filter((
@@ -194,6 +200,7 @@ export function RandomResultProvider({ children }: {children: ReactNode}) {
       timeGetResult,
       onSubmit,
       onChange,
+      deleteMember,
       onSelectException,
       addException,
       onClickResetInputData,
