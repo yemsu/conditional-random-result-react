@@ -168,7 +168,7 @@ export function RandomResultProvider({ children }: {children: ReactNode}) {
     setTimeout(() => {
       setIsStartTextRolling(false)
     }, TEXT_ROLLING_TIME)
-  }, [inputDataList, caseIndexResults])
+  }, [inputDataList, caseIndexResults, exceptions])
 
   const deleteMember = useCallback((data: string, dataType: string) => {
     removeInputBadge(data, dataType)
