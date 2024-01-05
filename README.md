@@ -1,46 +1,25 @@
-# Getting Started with Create React App
+# 조건 랜덤 뽑기 🫣
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+오늘 점심은 뭘 먹나~~   
+점심 메뉴 🍣, 항상 정하는 사람이 정하게 되잖아요.  
+이번주 점심 메뉴를 담당을 랜덤 뽑기로 정해보면 좋겠어요!! 🤭  
+앗! 그런데 민정 대리님 월, 화 연차예요?  
+이거이거, 민정 대리님이 월, 화 안나올때까지 뽑기를 돌릴 수도 없고 참. 🤯  
+안되겠다. 조건 랜덤 뽑기가 필요하겠어요. 🤓  
 
-## Available Scripts
+[조건 랜덤 뽑기 하러 가기 👉](https://conditional-random-result-react.vercel.app/)
 
-In the project directory, you can run:
+---
+![조건 랜덤 뽑기 사용 예시](https://private-user-images.githubusercontent.com/42016626/294434140-b1a4bc29-42a5-4d95-9c56-b0c520f8a77a.gif?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MDQ0NDMzODYsIm5iZiI6MTcwNDQ0MzA4NiwicGF0aCI6Ii80MjAxNjYyNi8yOTQ0MzQxNDAtYjFhNGJjMjktNDJhNS00ZDk1LTljNTYtYjBjNTIwZjhhNzdhLmdpZj9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDAxMDUlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQwMTA1VDA4MjQ0NlomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPWVhZDE5MTkwYzQxZDRmY2NmM2I2ZTJjMzU0NTMxMzZiN2ViNzhjZTg4NWZjMzVlYjkxMjUyNWRlMmY2N2QzMjUmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JmFjdG9yX2lkPTAma2V5X2lkPTAmcmVwb19pZD0wIn0.wMQ5mnYEBZ-bBsjPm-K-Y7woXoMuC0F17BLkdi-cKRY)
 
-### `npm start`
+## 사용 가이드
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+1. 뽑기에 참여할 멤버를 추가해주세요. 
+2. 각 멤버에게 랜덤으로 할당할 결과값을 추가해주세요. 
+3. 결과값을 추가하면 예외 설정 영역이 노출되는데요! 특정 멤버에게 특정 결과값이 할당되지 않아야 할 경우, 멤버와 결과값을 선택하고 추가 버튼을 눌러주세요!
+4. 랜덤 뽑기 버튼을 클릭하여 결과를 확인해보세요!
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## 유의사항
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- 결과값의 개수는 멤버와 같지 않아도 됩니다.
+- 뽑기 결과는 새로고침을 해도 유지됩니다! But, 브라우저 캐시를 삭제하면 기존의 뽑기 결과와 설정두었던 멤버, 결과값이 모두 초기화 됩니다.
