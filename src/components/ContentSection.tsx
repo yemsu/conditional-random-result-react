@@ -5,7 +5,7 @@ import { StyleMap } from "../types/common"
 interface ContentSectionProps {
   title: string,
   children: ReactNode,
-  styleTheme?: 'column' | 'row' | 'wrapContent'
+  styleTheme?: 'column' | 'wrapContent'
   align?: 'left' | 'center'
   bg?: 'none' | 'primary' | 'primary-200'
 }
@@ -38,19 +38,6 @@ const themeStyles = {
     SectionStyled: css`
       .area-content {
         margin-top: 5px;
-      }
-    `,
-  },
-  row: {
-    SectionStyled: css`
-      display: flex;
-      gap: 5px;
-      .title {
-        width: 50px;
-        flex-shrink: 0;
-      }
-      .area-content {
-        flex: 1;
       }
     `,
   },

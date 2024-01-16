@@ -4,7 +4,7 @@ import styled from "styled-components"
 interface InputProps {
   name: string
   value: string
-  placeholder?: string
+  label: string
   onChange: (e: SyntheticEvent) => void
   isFocusOn?: boolean
 }
@@ -12,7 +12,7 @@ interface InputProps {
 function Input(props: InputProps) {
   const {
     name,
-    placeholder,
+    label,
     value,
     onChange,
     isFocusOn
@@ -27,20 +27,29 @@ function Input(props: InputProps) {
 
 
   return (
-    <InputWrapper>
+    <Label htmlFor={name}>
+      <InputTitle>{label}</InputTitle>
       <StyledInput
         type="text"
         name={name}
+        id={name}
         value={value}
         onChange={onChange}
         ref={inputRef}
-        placeholder={placeholder ?? '입력'}
+        placeholder={`${label} 입력`}
       />
-    </InputWrapper>
+    </Label>
   )
 }
 
-const InputWrapper = styled.div`
+const Label = styled.label`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`
+
+const InputTitle = styled.h3`
+  font-size: 1em;
 `
 
 const StyledInput = styled.input`
