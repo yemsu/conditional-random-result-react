@@ -1,11 +1,11 @@
-import { ReactNode, SyntheticEvent, useCallback } from "react"
+import { ReactNode, SyntheticEvent } from "react"
 import styled from "styled-components"
 import Button from "../elements/Button"
 import Badge from "../elements/Badge"
 import List from "../elements/List"
 
 interface InputBadgesProps {
-  InputComp: ReactNode
+  children: ReactNode
   dataType: string
   dataList: string[]
   onSubmit: (e: SyntheticEvent, dataType: string) => void
@@ -14,22 +14,22 @@ interface InputBadgesProps {
 
 function InputBadges(props: InputBadgesProps) {
   const {
-    InputComp,
+    children,
     dataType,
     dataList,
     onSubmit,
     onDelete
   } = props
   
-  const deleteBadge = useCallback((e: SyntheticEvent, data: string) => {
+  const deleteBadge = (e: SyntheticEvent, data: string) => {
     e.preventDefault()
     onDelete(data, dataType)
-  }, [dataList])
+  }
 
   return (
     <FormStyled onSubmit={(e) => onSubmit(e, dataType)}>
       <InputArea>
-        { InputComp }
+        { children }
         <Button type="submit">추가</Button>
       </InputArea>
       {

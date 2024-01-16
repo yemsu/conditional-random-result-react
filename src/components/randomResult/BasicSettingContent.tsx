@@ -16,15 +16,6 @@ function BasicSettingContent() {
     onSubmit
   } = useContext(RandomResultContext)
 
-  const InputComp = (dataType: string) => (
-    <Input
-      name={dataType}
-      value={forms[dataType]}
-      onChange={onChange}
-      isFocusOn={focusInputDataType === dataType}
-    />
-  )
-
   return (
     <ContentSection title="⚙️ 기본 설정" styleTheme="wrapContent">
       {dataTypeKeyNames.map((dataTypeKeyName: string, i) => (
@@ -34,12 +25,19 @@ function BasicSettingContent() {
           styleTheme="row"
         >
           <InputBadges
-            InputComp={InputComp(dataTypeKeyName)}
             dataType={dataTypeKeyName}
             dataList={inputDataList[dataTypeKeyName]}
             onSubmit={onSubmit}
             onDelete={deleteMember}
-          />
+          >
+            <Input
+              name={dataTypeKeyName}
+              value={forms[dataTypeKeyName]}
+              onChange={onChange}
+              placeholder={`${dataTypes[i].korName} 입력`}
+              isFocusOn={focusInputDataType === dataTypeKeyName}
+            />
+          </InputBadges>
         </ContentSection>
       ))}
     </ContentSection>
