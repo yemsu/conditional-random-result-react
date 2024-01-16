@@ -1,4 +1,4 @@
-import { ElementType, ReactNode } from "react"
+import { ReactNode } from "react"
 import styled, { css } from "styled-components"
 
 interface ListProps<DataType> {
@@ -17,7 +17,6 @@ function List<DataType>(props: ListProps<DataType>) {
   } = props
 
   const listItemTagName = listType === 'ul' ? 'li' : 'div'
-
   return (
     <ListStyled theme={styleThemeMap[direction]} as={listType}>
       {dataList.map((data: DataType, i) => (
