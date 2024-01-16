@@ -52,7 +52,7 @@ function ConditionSettingContent() {
           >
             {({memberName, caseName}, i) => (
               <ExceptionItem>            
-                <dt>{memberName}</dt>
+                <dt>{memberName.join(', ')}</dt>
                 <dd>
                   {caseName.join(', ')}
                   <Button
