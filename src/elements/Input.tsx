@@ -4,6 +4,7 @@ import styled from "styled-components"
 interface InputProps {
   name: string
   value: string
+  placeholder?: string
   onChange: (e: SyntheticEvent) => void
   isFocusOn?: boolean
 }
@@ -11,6 +12,7 @@ interface InputProps {
 function Input(props: InputProps) {
   const {
     name,
+    placeholder,
     value,
     onChange,
     isFocusOn
@@ -32,6 +34,7 @@ function Input(props: InputProps) {
         value={value}
         onChange={onChange}
         ref={inputRef}
+        placeholder={placeholder ?? '입력'}
       />
     </InputWrapper>
   )
