@@ -24,7 +24,7 @@ function RandomResult() {
         <Button onClick={onClickResetInputData} styleTheme="primaryLine">전체 재설정</Button>
       </H1TitleWrapper>
       <BasicSettingContent />
-      { hasBasicData && <ConditionSettingContent /> }
+      <ConditionSettingContent />
       { caseIndexResults.length > 0 && <ResultContent /> }
       {
         hasBasicData &&
