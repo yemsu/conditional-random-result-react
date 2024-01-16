@@ -1,5 +1,5 @@
 import useInputs from '../hooks/useInputs';
-import { SyntheticEvent, useCallback, useState, ReactNode, createContext } from 'react';
+import { SyntheticEvent, useState, ReactNode, createContext } from 'react';
 import { getObjFromKeyArr, getRandomInt } from '../utils';
 import useOptionButtons from "../hooks/useOptionButtons";
 import useInputBadges from "../hooks/useInputBadges";
@@ -91,10 +91,8 @@ export function RandomResultProvider({ children }: {children: ReactNode}) {
   // rolling text
   const [isStartTextRolling, setIsStartTextRolling] = useState(false)
   const TEXT_ROLLING_TIME = 3000
-  // full result
-  const [isShowFullResult, setIsShowFullResult] = useState(false)
 
-  const onSubmit = useCallback((e: SyntheticEvent, dataType: string) => {
+  const onSubmit = (e: SyntheticEvent, dataType: string) => {
     e.preventDefault()
     
     const newData = forms[dataType].trim()
@@ -115,28 +113,28 @@ export function RandomResultProvider({ children }: {children: ReactNode}) {
       return
     }
     addInputData(newData, dataType)
-  }, [forms, inputDataList])
+  }
 
-  const addException = useCallback(() => {
+  const addException = () => {
     setExceptions(prev => [...prev, selectedExceptions])
     saveExceptionData([...exceptions, selectedExceptions])
     resetSelectedExceptions()
-  }, [selectedExceptions])
+  }
 
-  const resetExceptions = useCallback(() => {
+  const resetExceptions = () => {
     setExceptions([])
     resetSelectedExceptions()
     deleteSavedExceptionData()
-  }, [])
+  }
 
-  const onClickResetInputData = useCallback(() => {
+  const onClickResetInputData = () => {
     resetInputData()
     resetExceptions()
     setCaseIndexResults([])
     deleteSaveCaseIndexResults()
-  }, [])
+  }
 
-  const getMemberResult = useCallback((memberName: string, memberResults: number[]): number => {
+  const getMemberResult = (memberName: string, memberResults: number[]): number => {
     const randomInt = getRandomInt(inputDataList.memberName.length, 0)
     const caseName = inputDataList.caseName[randomInt]
     const isExceptionCase = exceptions.find((exception: OptionButtonsState) => (
@@ -147,10 +145,9 @@ export function RandomResultProvider({ children }: {children: ReactNode}) {
     } else {
       return randomInt
     }
+  }
 
-  }, [inputDataList, exceptions, caseIndexResults])
-
-  const onClickGetResult = useCallback(() => {    
+  const onClickGetResult = () => {    
     let memberResults: number[] = []
     inputDataList.memberName.forEach((memberName) => {
       const memberResult = getMemberResult(memberName, memberResults)
@@ -168,13 +165,13 @@ export function RandomResultProvider({ children }: {children: ReactNode}) {
     setTimeout(() => {
       setIsStartTextRolling(false)
     }, TEXT_ROLLING_TIME)
-  }, [inputDataList, caseIndexResults, exceptions])
+  }
 
-  const deleteMember = useCallback((data: string, dataType: string) => {
+  const deleteMember = (data: string, dataType: string) => {
     removeInputBadge(data, dataType)
-  }, [inputDataList])
+  }
 
-  const deleteException = useCallback((i: number) => {
+  const deleteException = (i: number) => {
     const getResult = (prev: OptionButtonsState[]) => (
       prev.filter((
         _: OptionButtonsState,
@@ -183,7 +180,7 @@ export function RandomResultProvider({ children }: {children: ReactNode}) {
     )
     setExceptions(getResult)
     saveExceptionData(getResult(exceptions))
-  }, [exceptions])
+  }
 
   return (
     <RandomResultContext.Provider value={{
