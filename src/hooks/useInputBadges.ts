@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useCallback, useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { Forms } from "../types/common";
 import useLocalStorage from "./useLocalStorage";
 import { STORAGE_NAME } from "../constants/clientStorage";
@@ -19,7 +19,7 @@ function useInputBadges(
   const [inputBadges, setInputBadges] = useState<InputBadges>(initialInputBadges)
   const [saveLocalStorage, deleteLocalStorage] = useLocalStorage(STORAGE_NAME.INPUT_BADGES, setInputBadges)
 
-  const addInputBadge = useCallback((newData: string, dataType: string) => {
+  const addInputBadge = (newData: string, dataType: string) => {
     const getResult = (prev: InputBadges) => ({
       ...prev,
       [dataType]: [...prev[dataType], newData]
@@ -29,21 +29,21 @@ function useInputBadges(
   
     // reset form
     setForms((prev) => ({...prev, [dataType]: ''}))
-  }, [inputBadges])
+  }
 
-  const removeInputBadge = useCallback((data: string, dataType: string) => {
+  const removeInputBadge = (data: string, dataType: string) => {
     const getResult = (prev: InputBadges) => ({
       ...prev,
       [dataType]: prev[dataType].filter(_data => data !== _data)
     })
     setInputBadges(getResult)
     saveLocalStorage(getResult(inputBadges))
-  }, [inputBadges])
+  }
 
-  const resetInputBadge = useCallback(() => {
+  const resetInputBadge = () => {
     setInputBadges(initialInputBadges)
     deleteLocalStorage()
-  }, [])
+  }
 
   return [inputBadges, addInputBadge, resetInputBadge, removeInputBadge]
 }
