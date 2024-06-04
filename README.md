@@ -1,16 +1,16 @@
-# 조건 랜덤 뽑기 🫣
+# 조건 랜덤 뽑기 🎉
 
 오늘 점심은 뭘 먹나~~   
 점심 메뉴 🍣, 항상 정하는 사람이 정하게 되잖아요.  
-이번주 점심 메뉴 담당을 랜덤 뽑기로 정해보면 좋겠어요!! 🤭  
-앗! 그런데 민정 대리님 월, 화 연차예요?  
-이거이거, 민정 대리님이 월, 화 안나올때까지 뽑기를 돌릴 수도 없고 참. 🤯  
-안되겠다. 조건 랜덤 뽑기가 필요하겠어요. 🤓  
+이번주 점심 메뉴 담당을 랜덤 뽑기로 정해보면 좋겠어요 🤭  
+앗! 그런데 민정 대리님 월요일 연차고 소진씨는 금요일 연차예요?  
+이거 이거, 연차날이랑 안 겹칠 때까지 뽑기를 돌려야 하는 건가 🤯  
+조건을 설정할 수 있는 랜덤 뽑기가 있으면 좋겠다!
 
 [조건 랜덤 뽑기 하러 가기 👉](https://conditional-random-result-react.vercel.app/)
 
 ---
-![조건 랜덤 뽑기 사용 예시](https://private-user-images.githubusercontent.com/42016626/294434140-b1a4bc29-42a5-4d95-9c56-b0c520f8a77a.gif?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MDQ0NDMzODYsIm5iZiI6MTcwNDQ0MzA4NiwicGF0aCI6Ii80MjAxNjYyNi8yOTQ0MzQxNDAtYjFhNGJjMjktNDJhNS00ZDk1LTljNTYtYjBjNTIwZjhhNzdhLmdpZj9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDAxMDUlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQwMTA1VDA4MjQ0NlomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPWVhZDE5MTkwYzQxZDRmY2NmM2I2ZTJjMzU0NTMxMzZiN2ViNzhjZTg4NWZjMzVlYjkxMjUyNWRlMmY2N2QzMjUmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JmFjdG9yX2lkPTAma2V5X2lkPTAmcmVwb19pZD0wIn0.wMQ5mnYEBZ-bBsjPm-K-Y7woXoMuC0F17BLkdi-cKRY)
+![조건 랜덤 뽑기 사용 예시](https://private-user-images.githubusercontent.com/42016626/294434140-b1a4bc29-42a5-4d95-9c56-b0c520f8a77a.gif?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MTc0NjI0NjgsIm5iZiI6MTcxNzQ2MjE2OCwicGF0aCI6Ii80MjAxNjYyNi8yOTQ0MzQxNDAtYjFhNGJjMjktNDJhNS00ZDk1LTljNTYtYjBjNTIwZjhhNzdhLmdpZj9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDA2MDQlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQwNjA0VDAwNDkyOFomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTEzNGVjMmY2NDk1NzYyNjhlZGRmMWYwMzRlOGNhODBiOWJjYzQyZmE1MTFlOTRlNWMwNDViZGIzYWZhNzgyOGUmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JmFjdG9yX2lkPTAma2V5X2lkPTAmcmVwb19pZD0wIn0.uW_U0do9LicOWAKa6UncBAwwJ3iApDl-T7uquaDKBPU)
 
 ## 사용 가이드
 
